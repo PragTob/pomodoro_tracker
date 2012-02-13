@@ -11,7 +11,7 @@ def menu
 end
 
 # main app
-Shoes.app title: "pomodoro tracker", width: 500, height: 300 do
+Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
   title "Pomodoros track you must", :align => "center"
   flow do
     menu
