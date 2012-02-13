@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class Pomodoro < SideTab
+  class PomodoroRunning < SideTab
     POMODORO_TIME = 25 * 60
 
     def content

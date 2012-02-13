@@ -1,3 +1,3 @@
 require PomodoroTracker::LIB_DIR + 'tabs/home'
-require PomodoroTracker::LIB_DIR + 'tabs/pomodoro'
+require PomodoroTracker::LIB_DIR + 'tabs/pomodoro_running'
 
