@@ -14,7 +14,7 @@ describe PomodoroTracker::ActivityInventory do
     @inventory.size.should be 0
   end
 
-  it "returns an empty array for activities" do
+  it "returns an empty array for activities after creation" do
     @inventory.activities.should == []
   end
 
