@@ -1,5 +1,6 @@
 module PomodoroTracker
   class ActivityInventory
+    include Enumerable
 
     attr_reader :activities
 
@@ -23,6 +24,11 @@ module PomodoroTracker
     def empty?
       @activities.empty?
     end
+
+    def each(&blk)
+      @activities.each(&blk)
+    end
+
   end
 end
 

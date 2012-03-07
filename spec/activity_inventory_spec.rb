@@ -38,5 +38,19 @@ describe PomodoroTracker::ActivityInventory do
 
   end
 
+  describe "Enumerable" do
+    it "responds to each" do
+      @inventory.should be_respond_to :each
+    end
+
+    it "has a working each" do
+      4.times { @inventory.add @activity }
+      i = 0
+      @inventory.each { |each| i+=1 }
+      i.should == 4
+    end
+
+  end
+
 end
 

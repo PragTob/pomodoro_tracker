@@ -5,8 +5,14 @@ MENU_WIDTH = 120
 # find the corresponding classes in the tabs directory
 def menu
   stack width: MENU_WIDTH do
-    para link("Home") { open_tab(PomodoroTracker::Home) }
-    para link("Close") { close if confirm "Are you sure?" }
+    # TODO Why doesn't para link work? o_O
+    button("Home") do
+      PomodoroTracker::SideTab.open(PomodoroTracker::Home)
+    end
+    button("Inventory") do
+      PomodoroTracker::SideTab.open(PomodoroTracker::ActivityInventoryTab)
+    end
+    button("Close") { close if confirm "Are you sure?" }
   end
 end
 
