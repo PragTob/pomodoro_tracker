@@ -17,6 +17,10 @@ module PomodoroTracker
       self
     end
 
+    def remove(activity)
+      @activities.delete(activity)
+    end
+
     def size
       @activities.size
     end

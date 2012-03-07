@@ -1,22 +1,48 @@
 module PomodoroTracker
   class PomodoroRunning < SideTab
-    POMODORO_TIME = 25 * 60
+    include DynamicSideTab
 
-    def content
+    POMODORO_TIME = 5 #25 * 60
+
+    def content(activity)
       @display = stack margin: 10
       @seconds = POMODORO_TIME
+      @activity = activity
       display_time
+      clock_ticking
 
-      animate(1) do
-        @seconds -= 1
-        display_time
-      end
+      para "You are working on the activity '#{activity.description}'"
+    end
+
+    def close
+      @timer.stop
+      super
     end
 
     private
     def display_time
       @display.clear do
         title "%02d:%02d" % [@seconds / 60 % 60, @seconds % 60], align: "center"
+      end
+    end
+
+    def clock_ticking
+      @timer = animate(1) do
+        @seconds -= 1
+        display_time
+        if @seconds == 0
+          @timer.stop
+          display_pomodoro_end
+        end
+      end
+    end
+
+    def display_pomodoro_end
+      @content.append do
+        @end_buttons = flow do
+          button "Finish" do @activity.finish end
+          button "Pause" do @activity.pause end
+        end
       end
     end
 

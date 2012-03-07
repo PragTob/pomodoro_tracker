@@ -13,9 +13,24 @@ module PomodoroTracker
     end
 
     private
+    def start_button(activity)
+      button "Start" do
+        SideTab.open(PomodoroRunning, activity)
+      end
+    end
+
+    def delete_button(activity)
+      button "Delete" do
+        @activity_inventory.remove activity
+        reset
+      end
+    end
+
     def new_activity(activity)
       flow do
         para activity.description
+        start_button(activity)
+        delete_button(activity)
       end
     end
 

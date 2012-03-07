@@ -2,10 +2,10 @@ module PomodoroTracker
   # tabs as inspired by the hacketyhack code
   class SideTab
 
-    def initialize(slot)
+    def initialize(slot, *args)
       @slot = slot
       @slot.append do
-        @content = stack do content end
+        @content = stack do content(*args) end
       end
     end
 
@@ -21,8 +21,8 @@ module PomodoroTracker
       @content.clear &blk
     end
 
-    def reset
-      clear { content }
+    def reset(*args)
+      clear { content(*args) }
     end
 
     # some real evil knievel hack to get initialize and content with normal shoes
@@ -39,21 +39,21 @@ module PomodoroTracker
         @slot = slot
       end
 
-      def open(tab)
+      def open(tab, *args)
         @current_tab.close unless @current_tab.nil?
-        @current_tab = get_tab(tab)
-        @current_tab.open
+        @current_tab = get_tab(tab, *args)
+        @current_tab.open(*args)
       end
 
       private
 
-      def get_tab(tab_class)
+      def get_tab(tab_class, *args)
         if @loaded_tabs.include?(tab_class)
           return @loaded_tabs[tab_class]
         else
           # load the class responding to the symbol(the desired tab)
           # the class could also be required just here, what do you think?
-          @loaded_tabs[tab_class] = tab_class.new(@slot)
+          @loaded_tabs[tab_class] = tab_class.new(@slot, *args)
         end
       end
 
