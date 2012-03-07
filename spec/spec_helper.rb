@@ -7,9 +7,6 @@ module PomodoroTracker
   puts LIB_DIR
 end
 
-#require_relative '../lib/pomodoro_tracker/models/activity'
-#require_relative '../lib/pomodoro_tracker/models/activity_inventory'
-#require_relative '../lib/pomodoro_tracker/models/to_do_today'
 require_relative '../lib/pomodoro_tracker/models/all'
 require_relative 'factories'
 

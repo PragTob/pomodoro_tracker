@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class ToDoToday
+  class Day
 
     attr_reader :date, :external_interruptions, :internal_interruptions,
                 :activities

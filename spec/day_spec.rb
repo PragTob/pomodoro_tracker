@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe PomodoroTracker::ToDoToday do
+describe PomodoroTracker::Day do
 
   before :each do
-    @to_do_today = PomodoroTracker::ToDoToday.new
+    @to_do_today = PomodoroTracker::Day.new
     @activity = FactoryGirl.build :activity
   end
 
@@ -75,7 +75,7 @@ describe PomodoroTracker::ToDoToday do
 
     before :each do
       Timecop.freeze(@today = Date.today)
-      @frozen_day = PomodoroTracker::ToDoToday.new
+      @frozen_day = PomodoroTracker::Day.new
     end
 
     it "has the correct date set when created" do
