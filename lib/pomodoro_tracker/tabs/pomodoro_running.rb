@@ -4,10 +4,13 @@ module PomodoroTracker
 
     POMODORO_TIME = 5 #25 * 60
 
-    def content(activity)
-      @display = stack margin: 10
+    def init_data(activity)
       @seconds = POMODORO_TIME
       @activity = activity
+    end
+
+    def content(activity)
+      @display = stack margin: 10
       display_time
       clock_ticking
 

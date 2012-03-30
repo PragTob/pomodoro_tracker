@@ -6,13 +6,16 @@ MENU_WIDTH = 120
 def menu
   stack width: MENU_WIDTH do
     # TODO Why doesn't para link work? o_O
-    button("Home") do
-      PomodoroTracker::SideTab.open(PomodoroTracker::Home)
+    button "Home" do
+      PomodoroTracker::SideTab.open PomodoroTracker::Home
     end
-    button("Inventory") do
-      PomodoroTracker::SideTab.open(PomodoroTracker::ActivityInventoryTab)
+    button "Inventory" do
+      PomodoroTracker::SideTab.open PomodoroTracker::ActivityInventoryTab
     end
-    button("Close") { close if confirm "Are you sure?" }
+    button 'ToDo Today' do
+      PomodoroTracker::SideTab.open PomodoroTracker::TodayTab
+    end
+    button "Close" do close if confirm "Are you sure?" end
   end
 end
 

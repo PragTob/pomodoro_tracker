@@ -1,7 +1,7 @@
 module PomodoroTracker
   class ActivityInventoryTab < SideTab
 
-    def init
+    def init_data
       @today ||= Day.today
       @activity_inventory ||= ActivityInventory.new
     end
