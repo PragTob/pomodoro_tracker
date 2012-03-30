@@ -6,7 +6,7 @@ module PomodoroTracker
       @activity_inventory ||= ActivityInventory.new
 
       @activities = stack do
-        @activity_inventory.each { |activity| new_activity(activity) }
+        @activity_inventory.each{ |activity| new_activity(activity) }
       end
 
       add_activity

@@ -82,6 +82,18 @@ describe PomodoroTracker::Day do
       @frozen_day.date.should == @today
     end
 
+    describe "getting today" do
+      it "instantiates the day for today" do
+        PomodoroTracker::Day.today.date.should == @today
+      end
+
+      it "should not create a new object when it is still the same day" do
+        day = PomodoroTracker::Day.today
+        PomodoroTracker::Day.today.should be_equal day
+      end
+
+    end
+
   end
 
 end
