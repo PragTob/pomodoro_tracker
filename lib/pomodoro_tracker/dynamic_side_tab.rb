@@ -2,11 +2,8 @@ module PomodoroTracker
   # A side tab that loads new contents every time it is openend
   module DynamicSideTab
 
-    def initialize(slot, *args)
-      @slot = slot
-      @slot.append do
-        @content = stack do;end
-      end
+    def init_slot
+      @slot.append{ @content = stack do;end }
     end
 
     # ocerwrite the old content

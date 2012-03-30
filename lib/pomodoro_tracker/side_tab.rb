@@ -3,15 +3,17 @@ module PomodoroTracker
   class SideTab
 
     # may be overriden to provide some none UI initialization
-    def init
+    def init_data
+    end
+
+    def init_slot(*args)
+      @slot.append{ @content = stack{content(*args)} }
     end
 
     def initialize(slot, *args)
-      init
+      init_data(*args)
       @slot = slot
-      @slot.append do
-        @content = stack do content(*args) end
-      end
+      init_slot
     end
 
     def open
