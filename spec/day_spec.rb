@@ -33,6 +33,15 @@ describe PomodoroTracker::Day do
       @to_do_today.activities.should == [@activity]
     end
 
+    it "can check that an activity is contained" do
+      @to_do_today.should include @activity
+    end
+
+    it "does not contain activities that were not added to it" do
+      unknown_activity = PomodoroTracker::Activity.new "I don't know"
+      @to_do_today.should_not include unknown_activity
+    end
+
   end
 
   describe "interruptions" do

@@ -31,6 +31,10 @@ module PomodoroTracker
       @external_interruptions + @internal_interruptions
     end
 
+    def include?(activity)
+      @activities.include? activity
+    end
+
     class << self
       def today
         @today ||= self.new
