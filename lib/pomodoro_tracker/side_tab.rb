@@ -2,7 +2,12 @@ module PomodoroTracker
   # tabs as inspired by the hacketyhack code
   class SideTab
 
+    # may be overriden to provide some none UI initialization
+    def init
+    end
+
     def initialize(slot, *args)
+      init
       @slot = slot
       @slot.append do
         @content = stack do content(*args) end
@@ -22,7 +27,10 @@ module PomodoroTracker
     end
 
     def reset(*args)
-      clear { content(*args) }
+      clear do
+        init
+        content(*args)
+      end
     end
 
     # some real evil knievel hack to get initialize and content with normal shoes

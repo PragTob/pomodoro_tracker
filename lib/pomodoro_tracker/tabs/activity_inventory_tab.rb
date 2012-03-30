@@ -1,9 +1,13 @@
 module PomodoroTracker
   class ActivityInventoryTab < SideTab
 
+    def init
+      @today ||= Day.today
+      @activity_inventory ||= ActivityInventory.new
+    end
+
     def content
       para "Activity Inventory"
-      @activity_inventory ||= ActivityInventory.new
 
       @activities = stack do
         @activity_inventory.each{ |activity| new_activity(activity) }
@@ -13,9 +17,13 @@ module PomodoroTracker
     end
 
     private
-    def start_button(activity)
-      button "Start" do
-        SideTab.open(PomodoroRunning, activity)
+    def add_today_button(activity)
+      if @today.include? activity
+        para "Already included in ToDo today"
+      else
+        button "Add to ToDoToday" do
+          @today.add activity
+        end
       end
     end
 
@@ -29,7 +37,7 @@ module PomodoroTracker
     def new_activity(activity)
       flow do
         para activity.description
-        start_button(activity)
+        add_today_button(activity)
         delete_button(activity)
       end
     end
