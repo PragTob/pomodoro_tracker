@@ -1,5 +1,6 @@
 module PomodoroTracker
   class ActivityInventoryTab < SideTab
+    ENTER = "\n"
 
     def init_data
       @today ||= Day.today
@@ -13,7 +14,7 @@ module PomodoroTracker
         @activity_inventory.each{ |activity| new_activity(activity) }
       end
 
-      add_activity
+      add_activity_section
     end
 
     private
@@ -42,16 +43,27 @@ module PomodoroTracker
       end
     end
 
-    def add_activity
+    def add_activity_section
       stack do
         para "Add an activity"
         flow do
           @edit_line = edit_line
-          button "Add" do
-            activity = Activity.new(@edit_line.text)
-            @activity_inventory.add activity
-            @activities.append { new_activity(activity) }
-          end
+          button "Add" do add_activity end
+        end
+      end
+      keypress_handler
+    end
+
+    def add_activity
+      activity = Activity.new(@edit_line.text)
+      @activity_inventory.add activity
+      @activities.append { new_activity(activity) }
+    end
+
+    def keypress_handler
+      keypress do |key|
+        if key == ENTER
+          add_activity unless @edit_line.text.empty?
         end
       end
     end
