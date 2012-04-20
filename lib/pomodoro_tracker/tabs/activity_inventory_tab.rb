@@ -58,6 +58,7 @@ module PomodoroTracker
       activity = Activity.new(@edit_line.text)
       @activity_inventory.add activity
       @activities.append { new_activity(activity) }
+      @edit_line.text = ''
     end
 
     def keypress_handler
