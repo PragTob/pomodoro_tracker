@@ -16,7 +16,7 @@ describe PomodoroTracker::Day do
   end
 
   it 'has no activities when created' do
-    @to_do_today.activities.should == []
+    @to_do_today.activities.should be_empty
   end
 
   describe "adding activities" do
@@ -30,7 +30,8 @@ describe PomodoroTracker::Day do
     end
 
     it "can retrieve activities" do
-      @to_do_today.activities.should == [@activity]
+      @to_do_today.activities.should include @activity
+      @to_do_today.activities.size.should eq 1
     end
 
     it "can check that an activity is contained" do
@@ -40,6 +41,11 @@ describe PomodoroTracker::Day do
     it "does not contain activities that were not added to it" do
       unknown_activity = PomodoroTracker::Activity.new "I don't know"
       @to_do_today.should_not include unknown_activity
+    end
+
+    it 'doesnt add the same activitiy twice' do
+      @to_do_today.add @activity
+      @to_do_today.activities.size.should eq 1
     end
 
   end

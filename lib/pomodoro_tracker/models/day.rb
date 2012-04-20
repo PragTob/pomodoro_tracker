@@ -8,7 +8,7 @@ module PomodoroTracker
       @date = Date.today
       @internal_interruptions = 0
       @external_interruptions = 0
-      @activities = []
+      @activities = Set.new
     end
 
     def internal_interrupt
