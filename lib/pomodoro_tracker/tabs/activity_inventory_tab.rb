@@ -19,13 +19,9 @@ module PomodoroTracker
 
     private
     def add_today_button(activity)
-      if @today.include? activity
-        para "Already included in ToDo today"
-      else
-        button "Add to ToDoToday" do |add_button|
-          @today.add activity
-          reset
-        end
+      button "Add to ToDoToday" do |add_button|
+        @today.add activity
+        add_button.parent.remove
       end
     end
 
