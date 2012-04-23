@@ -30,7 +30,7 @@ module PomodoroTracker
 
     def reset(*args)
       clear do
-        init
+        init_data
         content(*args)
       end
     end
