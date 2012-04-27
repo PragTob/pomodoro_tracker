@@ -47,6 +47,16 @@ describe PomodoroTracker::Day do
       @to_do_today.add @activity
       @to_do_today.activities.size.should eq 1
     end
+    
+    it 'can remove the activity from the todo today' do
+      @to_do_today.remove @activity
+      @to_do_today.should be_empty
+    end
+    
+    it 'can do the activity another day' do
+      @to_do_today.do_another_day @activity
+      @to_do_today.should be_empty
+    end
 
   end
 

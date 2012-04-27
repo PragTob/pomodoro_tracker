@@ -34,6 +34,12 @@ module PomodoroTracker
     def include?(activity)
       @activities.include? activity
     end
+    
+    def remove(activitiy)
+      @activities.delete activitiy
+    end
+    
+    alias_method :do_another_day, :remove
 
     class << self
       def today

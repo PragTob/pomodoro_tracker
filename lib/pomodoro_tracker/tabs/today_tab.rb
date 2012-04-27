@@ -31,7 +31,7 @@ module PomodoroTracker
 
     def do_another_day_button(activity)
       button 'Do another day' do
-        @today.delete activity
+        @today.do_another_day activity
       end
     end
 
