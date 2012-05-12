@@ -36,6 +36,10 @@ module PomodoroTracker
     def todo_today
       @activities.select{|activity| activity.done_today?}
     end
+    
+    def backlog
+      @activities.reject{|activity| activity.done_today?}
+    end
 
   end
 end

@@ -52,11 +52,33 @@ describe PomodoroTracker::ActivityInventory do
 
   end
   
-  it 'can retrieve all the activities that should be done today' do
-    4.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s }
-    3.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s, true }
+  describe 'accessing different sets of activities' do
+  
+    DO_TODAY_ACTIVITIES = 3
+    BACKLOG_ACTIVITIES = 4
+  
+    before :each do
+      BACKLOG_ACTIVITIES.times do |i| 
+        @inventory.add PomodoroTracker::Activity.new i.to_s
+      end
+      
+      DO_TODAY_ACTIVITIES.times do |i| 
+        @inventory.add PomodoroTracker::Activity.new 'urgent' + i.to_s, true
+      end
+    end
     
-    @inventory.todo_today.size.should eq 3
+    it 'can retrieve all the activities that should be done today' do
+      @inventory.todo_today.size.should eq DO_TODAY_ACTIVITIES
+    end
+    
+    it 'can retrieve all activities that are still on the inventory list' do
+      @inventory.backlog.size.should eq BACKLOG_ACTIVITIES
+    end
+    
+    it 'can retrieve all activities' do
+      @inventory.activities.size.should eq DO_TODAY_ACTIVITIES + BACKLOG_ACTIVITIES
+    end
+  
   end
     
 
