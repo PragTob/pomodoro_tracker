@@ -14,8 +14,8 @@ describe PomodoroTracker::ActivityInventory do
     @inventory.size.should be 0
   end
 
-  it "returns an empty array for activities after creation" do
-    @inventory.activities.should == []
+  it "returns  empty activities after creation" do
+    @inventory.activities.should be_empty
   end
 
   describe "after adding an activity" do
@@ -44,7 +44,7 @@ describe PomodoroTracker::ActivityInventory do
     end
 
     it "has a working each" do
-      4.times { @inventory.add @activity }
+      4.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s }
       i = 0
       @inventory.each { |each| i+=1 }
       i.should == 4

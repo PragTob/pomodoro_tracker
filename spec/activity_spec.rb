@@ -33,7 +33,7 @@ describe PomodoroTracker::Activity do
   it "has a status of inactive" do
     @activity.status.should be :inactive
   end
-
+  
   describe "actions" do
 
     describe "after start" do
