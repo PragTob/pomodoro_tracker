@@ -29,6 +29,14 @@ describe PomodoroTracker::Activity do
     PomodoroTracker::Activity.new("describe me").description
                                                 .should == "describe me"
   end
+  
+  it 'is not done today by default' do
+    @activity.should_not be_done_today
+  end
+  
+  it 'can be created so that it should get done today' do
+    PomodoroTracker::Activity.new('urgent', true).should be_done_today
+  end
 
   it "has a status of inactive" do
     @activity.status.should be :inactive

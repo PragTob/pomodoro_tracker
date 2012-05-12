@@ -11,55 +11,6 @@ describe PomodoroTracker::Day do
     @to_do_today.should_not be nil
   end
 
-  it 'is empty when created' do
-    @to_do_today.should be_empty
-  end
-
-  it 'has no activities when created' do
-    @to_do_today.activities.should be_empty
-  end
-
-  describe "adding activities" do
-
-    before :each do
-      @to_do_today.add @activity
-    end
-
-    it "can add activities" do
-      @to_do_today.should_not be_empty
-    end
-
-    it "can retrieve activities" do
-      @to_do_today.activities.should include @activity
-      @to_do_today.activities.size.should eq 1
-    end
-
-    it "can check that an activity is contained" do
-      @to_do_today.should include @activity
-    end
-
-    it "does not contain activities that were not added to it" do
-      unknown_activity = PomodoroTracker::Activity.new "I don't know"
-      @to_do_today.should_not include unknown_activity
-    end
-
-    it 'doesnt add the same activitiy twice' do
-      @to_do_today.add @activity
-      @to_do_today.activities.size.should eq 1
-    end
-    
-    it 'can remove the activity from the todo today' do
-      @to_do_today.remove @activity
-      @to_do_today.should be_empty
-    end
-    
-    it 'can do the activity another day' do
-      @to_do_today.do_another_day @activity
-      @to_do_today.should be_empty
-    end
-
-  end
-
   describe "interruptions" do
 
     it "has no interruptions when created" do

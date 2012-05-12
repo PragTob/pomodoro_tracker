@@ -4,9 +4,8 @@ module PomodoroTracker
 
     attr_reader :activities
 
-    def initialize(day = nil)
+    def initialize
       @activities = Set.new
-      @current_day = day || Day.today
     end
 
     def add(activity)
