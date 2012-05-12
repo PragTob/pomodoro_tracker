@@ -51,6 +51,14 @@ describe PomodoroTracker::ActivityInventory do
     end
 
   end
+  
+  it 'can retrieve all the activities that should be done today' do
+    4.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s }
+    3.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s, true }
+    
+    @inventory.todo_today.size.should eq 3
+  end
+    
 
 end
 

@@ -32,6 +32,10 @@ module PomodoroTracker
     def each(&blk)
       @activities.each(&blk)
     end
+    
+    def todo_today
+      @activities.select{|activity| activity.done_today?}
+    end
 
   end
 end
