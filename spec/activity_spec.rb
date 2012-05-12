@@ -38,7 +38,7 @@ describe PomodoroTracker::Activity do
     PomodoroTracker::Activity.new('urgent', true).should be_done_today
   end
 
-  it "has a status of inactive" do
+  it "has a status of inactive by default" do
     @activity.status.should be :inactive
   end
   
@@ -80,6 +80,20 @@ describe PomodoroTracker::Activity do
         @activity.pomodori.should be 1
       end
 
+    end
+    
+    describe 'do it today or another day' do
+      it 'can be done today' do
+        @activity.do_today
+        @activity.should be_done_today
+      end
+      
+      it 'can be done another day if you decide that today isnt suitable' do
+        @activity.do_today
+        @activity.do_another_day
+        
+        @activity.should_not be_done_today
+      end
     end
 
   end

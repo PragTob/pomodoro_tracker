@@ -28,6 +28,14 @@ module PomodoroTracker
     def done_today?
       @do_today
     end
+    
+    def do_today
+      @do_today = true
+    end
+    
+    def do_another_day
+      @do_today = false
+    end
 
   end
 end
