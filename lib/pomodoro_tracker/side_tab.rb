@@ -6,8 +6,8 @@ module PomodoroTracker
     def init_data
     end
 
-    def init_slot(*args)
-      @slot.append{ @content = stack{content(*args)} }
+    def init_slot
+      @slot.append{ @content = stack{content} }
     end
 
     def initialize(slot, *args)
@@ -16,7 +16,7 @@ module PomodoroTracker
       init_slot
     end
 
-    def open
+    def open(*args)
       @content.show
     end
 
@@ -30,8 +30,8 @@ module PomodoroTracker
 
     def reset(*args)
       clear do
-        init_data
-        content(*args)
+        init_data(*args)
+        content
       end
     end
 
@@ -52,7 +52,7 @@ module PomodoroTracker
       def open(tab, *args)
         @current_tab.close unless @current_tab.nil?
         @current_tab = get_tab(tab, *args)
-        @current_tab.open(*args)
+        @current_tab.open *args
       end
 
       private

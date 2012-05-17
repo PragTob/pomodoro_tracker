@@ -1,14 +1,17 @@
 module PomodoroTracker
   class TodayTab < SideTab
 
-    def init_data
+    def init_data(activity_inventory)
       @today ||= Day.today
+      @activity_inventory = activity_inventory
     end
 
     def content
       para "This is your todo list for today"
 
-      @today.activities.each{|activity| today_activity activity}
+      @activity_inventory.todo_today.each do |activity| 
+        today_activity activity
+      end
 
       para "You might want to add something from your activity inventory"
     end
@@ -31,7 +34,7 @@ module PomodoroTracker
 
     def do_another_day_button(activity)
       button 'Do another day' do
-        @today.do_another_day activity
+        activity.do_another_day
       end
     end
 

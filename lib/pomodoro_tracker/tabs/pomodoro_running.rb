@@ -9,12 +9,12 @@ module PomodoroTracker
       @activity = activity
     end
 
-    def content(activity)
+    def content
       @display = stack margin: 10
       display_time
       clock_ticking
 
-      para "You are working on the activity '#{activity.description}'"
+      para "You are working on the activity '#{@activity.description}'"
     end
 
     def close

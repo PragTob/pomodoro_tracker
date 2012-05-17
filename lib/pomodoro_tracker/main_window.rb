@@ -10,17 +10,22 @@ def menu
       PomodoroTracker::SideTab.open PomodoroTracker::Home
     end
     button "Inventory" do
-      PomodoroTracker::SideTab.open PomodoroTracker::ActivityInventoryTab
+      PomodoroTracker::SideTab.open PomodoroTracker::ActivityInventoryTab, @inventory
     end
     button 'ToDo Today' do
-      PomodoroTracker::SideTab.open PomodoroTracker::TodayTab
+      PomodoroTracker::SideTab.open PomodoroTracker::TodayTab, @inventory
     end
     button "Close" do close if confirm "Are you sure?" end
   end
 end
 
+def boot
+  @inventory = PomodoroTracker::ActivityInventory.new
+end
+
 # main app
 Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
+  boot
   title "Pomodoros track you must", :align => "center"
   flow do
     menu

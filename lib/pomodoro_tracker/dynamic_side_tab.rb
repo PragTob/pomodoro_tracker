@@ -8,8 +8,9 @@ module PomodoroTracker
 
     # ocerwrite the old content
     def open(*args)
+      init_data(*args)
       @slot.append do
-        @content = stack do content(*args) end
+        @content = stack do content end
       end
     end
 

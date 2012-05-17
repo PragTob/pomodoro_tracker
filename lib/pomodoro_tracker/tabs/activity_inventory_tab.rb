@@ -2,16 +2,15 @@ module PomodoroTracker
   class ActivityInventoryTab < SideTab
     ENTER = "\n"
 
-    def init_data
-      @today ||= Day.today
-      @activity_inventory ||= ActivityInventory.new
+    def init_data(inventory = nil)
+      @activity_inventory ||= inventory
     end
 
     def content
       para "Activity Inventory"
 
       @activities = stack do
-        @activity_inventory.each{ |activity| new_activity(activity) }
+        @activity_inventory.backlog.each{ |activity| new_activity(activity) }
       end
 
       add_activity_section
@@ -20,7 +19,7 @@ module PomodoroTracker
     private
     def add_today_button(activity)
       button "Add to ToDoToday" do |add_button|
-        @today.add activity
+        activity.do_today
         add_button.parent.remove
       end
     end
