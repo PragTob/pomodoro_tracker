@@ -34,8 +34,9 @@ module PomodoroTracker
     end
 
     def do_another_day_button(activity)
-      button 'Do another day' do
+      button 'Do another day' do |do_another_day_button|
         activity.do_another_day
+        do_another_day_button.parent.remove
       end
     end
 

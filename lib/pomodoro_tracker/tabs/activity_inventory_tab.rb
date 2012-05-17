@@ -27,9 +27,9 @@ module PomodoroTracker
     end
 
     def delete_button(activity)
-      button "Delete" do
+      button "Delete" do |delete_button|
         @activity_inventory.remove activity
-        reset
+        delete_button.parent.remove
       end
     end
 
