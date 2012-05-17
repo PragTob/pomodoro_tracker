@@ -1,5 +1,6 @@
 module PomodoroTracker
   class TodayTab < SideTab
+    include DynamicSideTab
 
     def init_data(activity_inventory)
       @today ||= Day.today

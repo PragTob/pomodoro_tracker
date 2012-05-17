@@ -1,5 +1,7 @@
 module PomodoroTracker
   class ActivityInventoryTab < SideTab
+    include DynamicSideTab
+    
     ENTER = "\n"
 
     def init_data(inventory = nil)
