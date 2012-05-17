@@ -9,18 +9,34 @@ def menu
     button "Home" do
       PomodoroTracker::SideTab.open PomodoroTracker::Home
     end
-    button "Inventory" do
-      PomodoroTracker::SideTab.open PomodoroTracker::ActivityInventoryTab, @inventory
-    end
-    button 'ToDo Today' do
-      PomodoroTracker::SideTab.open PomodoroTracker::TodayTab, @inventory
-    end
-    button "Close" do close if confirm "Are you sure?" end
+    button "Inventory" do open_inventory end
+    button 'ToDo Today' do open_today end
+    button "Close" do close_pomodoro  end
   end
+end
+
+def open_inventory
+  PomodoroTracker::SideTab.open PomodoroTracker::ActivityInventoryTab, @inventory
+end
+
+def open_today
+  PomodoroTracker::SideTab.open PomodoroTracker::TodayTab, @inventory
+end
+
+def close_pomodoro
+  close if confirm "Are you sure?"
 end
 
 def boot
   @inventory = PomodoroTracker::ActivityInventory.new
+end
+
+def general_key_handlers
+  keypress do |key|
+    open_inventory if key == :control_i
+    open_today if key == :control_t
+    close_pomodoro if key == :control_q
+  end
 end
 
 # main app
@@ -31,6 +47,8 @@ Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
     menu
     @main_content = stack width: -MENU_WIDTH
   end
+  
+  general_key_handlers
 
   PomodoroTracker::SideTab.setup(@main_content)
   # we start at home!
