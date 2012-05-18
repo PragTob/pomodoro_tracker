@@ -21,10 +21,6 @@ describe PomodoroTracker::Activity do
     @activity.pomodori.should eq 0
   end
 
-  it "can be created given a description" do
-    PomodoroTracker::Activity.new("describe me").should_not be nil
-  end
-
   it "can be created given a description and then the description is correct" do
     PomodoroTracker::Activity.new("describe me").description
                                                 .should == "describe me"
