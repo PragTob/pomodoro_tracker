@@ -29,8 +29,10 @@ module PomodoroTracker
 
     def delete_button(activity)
       button "Delete" do |delete_button|
-        @activity_inventory.remove activity
-        delete_button.parent.remove
+        if confirm 'Sure to delete this activity?'
+          @activity_inventory.remove activity
+          delete_button.parent.remove
+        end
       end
     end
 
