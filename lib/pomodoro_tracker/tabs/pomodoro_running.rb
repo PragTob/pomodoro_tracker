@@ -58,9 +58,11 @@ module PomodoroTracker
     end
     
     def pause_button
-      button "Pause" do 
+      button "Pause" do |pause_btn|
         @activity.pause
         @seconds = PAUSE_TIME
+        # remove thyself
+        pause_btn.parent.remove
         @timer.start
       end
     end
