@@ -3,6 +3,7 @@ module PomodoroTracker
     include DynamicSideTab
 
     POMODORO_TIME = 5 #25 * 60
+    PAUSE_TIME    = 2
 
     def init_data(activity)
       @seconds = POMODORO_TIME
@@ -43,9 +44,24 @@ module PomodoroTracker
     def display_pomodoro_end
       @content.append do
         @end_buttons = flow do
-          button "Finish" do @activity.finish end
-          button "Pause" do @activity.pause end
+          finish_button
+          pause_button
         end
+      end
+    end
+    
+    def finish_button
+      button "Finish" do 
+        @activity.finish
+        PomodoroTracker::SideTab.open PomodoroTracker::TodayTab 
+      end
+    end
+    
+    def pause_button
+      button "Pause" do 
+        @activity.pause
+        @seconds = PAUSE_TIME
+        @timer.start
       end
     end
 

@@ -1,10 +1,12 @@
 module PomodoroTracker
   class TodayTab < SideTab
     include DynamicSideTab
+    # dynamic is not totally right, we don't get new data but we have to
+    # render the content once again (reset) since we need to update it TODO
 
-    def init_data(activity_inventory)
+    def init_data(activity_inventory = nil)
       @today ||= Day.today
-      @activity_inventory = activity_inventory
+      @activity_inventory ||= activity_inventory
     end
 
     def content
