@@ -76,8 +76,9 @@ module PomodoroTracker
     end
     
     def working_info(activity)
-      "You are working on the activity '#{activity.description}'." +
-      "You are already working on this activity for #{activity.pomodori} pomodori."
+      "You are working on the activity '#{activity.description}'. " +
+      "You are already working on this activity for #{activity.pomodori} pomodori. " +
+      "You estimated that this activity would take you #{activity.estimate} pomodori to finish."
     end
 
   end

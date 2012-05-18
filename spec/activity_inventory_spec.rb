@@ -63,7 +63,7 @@ describe PomodoroTracker::ActivityInventory do
       end
       
       DO_TODAY_ACTIVITIES.times do |i| 
-        @inventory.add PomodoroTracker::Activity.new 'urgent' + i.to_s, true
+        @inventory.add PomodoroTracker::Activity.new 'urgent' + i.to_s, 0, true
       end
     end
     

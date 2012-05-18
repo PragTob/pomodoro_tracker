@@ -11,6 +11,7 @@ module PomodoroTracker
     def content
       para "Activity Inventory"
 
+      para "Description Pomodori Estimate Actions"
       @activities = stack do
         @activity_inventory.backlog.each{ |activity| new_activity(activity) }
       end
@@ -19,8 +20,8 @@ module PomodoroTracker
     end
 
     private
-    def add_today_button(activity)
-      button "Add to ToDoToday" do |add_button|
+    def do_today_button(activity)
+      button "Do Today" do |add_button|
         activity.do_today
         add_button.parent.remove
       end
@@ -36,7 +37,9 @@ module PomodoroTracker
     def new_activity(activity)
       flow do
         para activity.description
-        add_today_button(activity)
+        para activity.pomodori
+        para activity.estimate
+        do_today_button(activity)
         delete_button(activity)
       end
     end
@@ -45,7 +48,10 @@ module PomodoroTracker
       stack do
         para "Add an activity"
         flow do
-          @edit_line = edit_line
+          para "Description: "
+          @description = edit_line
+          para "Estimation: "
+          @estimate = edit_line
           button "Add" do add_activity end
         end
       end
@@ -53,16 +59,17 @@ module PomodoroTracker
     end
 
     def add_activity
-      activity = Activity.new(@edit_line.text)
+      # '' is converted to 0 when calling to_i so empty works just fine
+      activity = Activity.new(@description.text, @estimate.text.to_i)
       @activity_inventory.add activity
       @activities.append { new_activity(activity) }
-      @edit_line.text = ''
+      @description.text = ''
     end
 
     def keypress_handler
       keypress do |key|
         if key == ENTER
-          add_activity unless @edit_line.text.empty?
+          add_activity unless @description.text.empty?
         end
       end
     end

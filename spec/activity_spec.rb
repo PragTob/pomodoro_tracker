@@ -26,12 +26,16 @@ describe PomodoroTracker::Activity do
                                                 .should == "describe me"
   end
   
+  it "can be created given a description and an estimate" do
+    PomodoroTracker::Activity.new("describe me", 5).estimate.should == 5
+  end
+  
   it 'is not done today by default' do
     @activity.should_not be_done_today
   end
   
   it 'can be created so that it should get done today' do
-    PomodoroTracker::Activity.new('urgent', true).should be_done_today
+    PomodoroTracker::Activity.new('urgent', 0, true).should be_done_today
   end
 
   it "has a status of inactive by default" do

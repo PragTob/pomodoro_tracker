@@ -4,11 +4,12 @@ module PomodoroTracker
     attr_reader   :pomodori, :status
 
     # by default we don't do tasks today
-    def initialize(description = '', do_today = false)
+    def initialize(description = '', estimate = 0, do_today = false)
       @description = description
       @pomodori = 0
       @status = :inactive
       @do_today = do_today
+      @estimate = estimate
     end
 
     def start
