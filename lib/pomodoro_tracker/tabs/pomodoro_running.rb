@@ -15,7 +15,7 @@ module PomodoroTracker
       display_time
       clock_ticking
 
-      para "You are working on the activity '#{@activity.description}'"
+      @info = para working_info(@activity) 
     end
 
     def close
@@ -36,6 +36,7 @@ module PomodoroTracker
         display_time
         if @seconds == 0
           @timer.stop
+          @info.replace working_info(@activity)
           display_pomodoro_end
         end
       end
@@ -63,12 +64,20 @@ module PomodoroTracker
         @seconds = PAUSE_TIME
         # remove thyself
         pause_btn.parent.remove
+        @info.replace "You shouldn't be reading this right now! " + 
+        "It's time for a break and therefore you should step aways from the " +
+        "keyboard and enjoy your break!"
         @timer.start
       end
     end
 
     def add_task
       @task = edit_line
+    end
+    
+    def working_info(activity)
+      "You are working on the activity '#{activity.description}'." +
+      "You are already working on this activity for #{activity.pomodori} pomodori."
     end
 
   end
