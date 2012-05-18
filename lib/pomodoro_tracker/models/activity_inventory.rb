@@ -5,7 +5,7 @@ module PomodoroTracker
     attr_reader :activities
 
     def initialize
-      @activities = Set.new
+      @activities = []
     end
 
     def add(activity)
@@ -34,11 +34,11 @@ module PomodoroTracker
     end
     
     def todo_today
-      @activities.select{|activity| activity.done_today?}
+      @activities.select{|activity| activity.done_today? && !activity.finished?}
     end
     
     def backlog
-      @activities.reject{|activity| activity.done_today?}
+      @activities.reject{|activity| activity.done_today? || activity.finished?}
     end
 
   end

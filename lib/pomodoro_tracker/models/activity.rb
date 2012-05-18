@@ -30,6 +30,10 @@ module PomodoroTracker
       @do_today
     end
     
+    def finished?
+      @status == :finished
+    end
+    
     def do_today
       @do_today = true
     end

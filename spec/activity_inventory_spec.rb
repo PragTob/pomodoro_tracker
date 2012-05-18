@@ -78,7 +78,16 @@ describe PomodoroTracker::ActivityInventory do
     it 'can retrieve all activities' do
       @inventory.activities.size.should eq DO_TODAY_ACTIVITIES + BACKLOG_ACTIVITIES
     end
-  
+    
+    it 'does not include finished activities in the todo_today' do
+      @inventory.find{|activity| activity.done_today? }.finish
+      @inventory.todo_today.size.should eq DO_TODAY_ACTIVITIES - 1
+    end
+    
+    it 'does not include finished activities in the backlog' do
+      @inventory.activities.first.finish
+      @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
+    end
   end
     
 

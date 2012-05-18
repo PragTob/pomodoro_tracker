@@ -20,6 +20,10 @@ describe PomodoroTracker::Activity do
   it "has 0 pomodori when created" do
     @activity.pomodori.should eq 0
   end
+  
+  it 'should not be finished' do
+    @activity.should_not be_finished
+  end
 
   it "can be created given a description and then the description is correct" do
     PomodoroTracker::Activity.new("describe me").description
@@ -73,6 +77,11 @@ describe PomodoroTracker::Activity do
       it "can be finished" do
         @activity.finish
         @activity.status.should be :finished
+      end
+      
+      it 'has a cool accessor for the finishes status' do
+        @activity.finish
+        @activity.should be_finished
       end
 
       it "has a pomodri count of 1 after one finish" do
