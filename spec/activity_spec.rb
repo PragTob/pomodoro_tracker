@@ -24,6 +24,10 @@ describe PomodoroTracker::Activity do
   it 'should not be finished' do
     @activity.should_not be_finished
   end
+  
+  it 'should not be paused' do
+    @activity.should_not be_paused
+  end
 
   it "can be created given a description and then the description is correct" do
     PomodoroTracker::Activity.new("describe me").description
@@ -61,6 +65,11 @@ describe PomodoroTracker::Activity do
       it "can be paused (not finished after pomodoro)" do
         @activity.pause
         @activity.status.should be :paused
+      end
+      
+      it 'can be paused and has a cool accessor for this' do
+        @activity.pause
+        @activity.should be_paused
       end
 
       it "has a pomodori count of 1 after one pause" do
