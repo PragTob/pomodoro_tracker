@@ -47,7 +47,7 @@ describe PomodoroTracker::Activity do
   end
 
   it "has a status of inactive by default" do
-    @activity.status.should be :inactive
+    @activity.should be_inactive
   end
   
   describe "actions" do
@@ -59,19 +59,14 @@ describe PomodoroTracker::Activity do
       end
 
       it "can be started and changes the status to working" do
-        @activity.status.should be :active
+        @activity.should be_active
       end
 
       it "can be paused (not finished after pomodoro)" do
         @activity.pause
-        @activity.status.should be :paused
-      end
-      
-      it 'can be paused and has a cool accessor for this' do
-        @activity.pause
         @activity.should be_paused
       end
-
+      
       it "has a pomodori count of 1 after one pause" do
         @activity.pause
         @activity.pomodori.should be 1
@@ -80,19 +75,14 @@ describe PomodoroTracker::Activity do
       it "can be paused and then started again" do
         @activity.pause
         @activity.start
-        @activity.status.should be :active
+        @activity.should be_active
       end
 
       it "can be finished" do
         @activity.finish
-        @activity.status.should be :finished
-      end
-      
-      it 'has a cool accessor for the finishes status' do
-        @activity.finish
         @activity.should be_finished
       end
-
+      
       it "has a pomodri count of 1 after one finish" do
         @activity.finish
         @activity.pomodori.should be 1

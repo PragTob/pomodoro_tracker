@@ -35,10 +35,6 @@ module PomodoroTracker
       @do_today
     end
     
-    def finished?
-      @status == FINISHED
-    end
-    
     def do_today
       @do_today = true
     end
@@ -49,6 +45,18 @@ module PomodoroTracker
     
     def paused?
       status == PAUSED
+    end
+    
+    def inactive?
+      status == INACTIVE
+    end
+    
+    def finished?
+      @status == FINISHED
+    end
+    
+    def active?
+      @status == ACTIVE
     end
 
   end
