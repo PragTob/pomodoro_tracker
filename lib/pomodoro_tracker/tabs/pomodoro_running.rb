@@ -12,8 +12,7 @@ module PomodoroTracker
 
     def content
       init_clock(POMODORO_TIME) { display_pomodoro_end }
-
-      @info = para working_info(@activity) 
+      @info = para working_info 
     end
 
     def close
@@ -39,15 +38,9 @@ module PomodoroTracker
     end
     
     def pause_button
-      button "Pause" do |pause_btn|
+      button "Pause" do
         @activity.pause
-        @seconds = PAUSE_TIME
-        # remove thyself
-        pause_btn.parent.remove
-        @info.replace "You shouldn't be reading this right now! " + 
-        "It's time for a break and therefore you should step aways from the " +
-        "keyboard and enjoy your break!"
-        @timer.start
+        SideTab.open PomodoroPausedTab, @activity
       end
     end
 
@@ -55,10 +48,10 @@ module PomodoroTracker
       @task = edit_line
     end
     
-    def working_info(activity)
-      "You are working on the activity '#{activity.description}'. " +
-      "You are already working on this activity for #{activity.pomodori} pomodori. " +
-      "You estimated that this activity would take you #{activity.estimate} pomodori to finish."
+    def working_info
+      "You are working on the activity '#{@activity.description}'. " +
+      "You are already working on this activity for #{@activity.pomodori} pomodori. " +
+      "You estimated that this activity would take you #{@activity.estimate} pomodori to finish."
     end
 
   end
