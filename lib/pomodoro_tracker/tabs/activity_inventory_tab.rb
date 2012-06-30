@@ -49,15 +49,25 @@ module PomodoroTracker
     def add_activity_section
       stack do
         para "Add an activity"
-        flow do
-          para "Description: "
-          @description = edit_line
-          para "Estimation: "
-          @estimate = edit_line
-          button "Add" do add_activity end
-        end
+        add_activity_description
+        add_activity_estimation
+        button "Add" do add_activity end
       end
       keypress_handler
+    end
+    
+    def add_activity_description
+      flow do
+        para "Description: "
+        @description = edit_line
+      end
+    end
+    
+    def add_activity_estimation
+      flow do
+        para "Estimation: "
+        @estimate = edit_line
+      end
     end
 
     def add_activity
