@@ -1,4 +1,5 @@
-MENU_WIDTH = 120
+MENU_WIDTH = 100
+BUTTON_WIDTH = MENU_WIDTH - 10
 
 # the main menu displayed on the left hand side
 # opens the specified content in the main window
@@ -6,12 +7,12 @@ MENU_WIDTH = 120
 def menu
   stack width: MENU_WIDTH do
     # TODO Why doesn't para link work? o_O
-    button "Home" do
+    button 'Home', width: BUTTON_WIDTH do
       PomodoroTracker::SideTab.open PomodoroTracker::HomeTab
     end
-    button "Inventory" do open_inventory end
-    button 'ToDo Today' do open_today end
-    button "Close" do close_pomodoro  end
+    button 'Inventory', width: BUTTON_WIDTH do open_inventory end
+    button 'ToDo Today', width: BUTTON_WIDTH do open_today end
+    button 'Close', width: BUTTON_WIDTH do close_pomodoro  end
   end
 end
 
