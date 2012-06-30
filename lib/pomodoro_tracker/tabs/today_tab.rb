@@ -31,7 +31,7 @@ module PomodoroTracker
     def start_button(activity)
       button 'Start' do
         activity.start
-        SideTab.open PomodoroRunning, activity
+        SideTab.open PomodoroRunningTab, activity
       end
     end
 

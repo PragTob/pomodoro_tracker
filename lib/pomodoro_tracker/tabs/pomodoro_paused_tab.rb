@@ -41,7 +41,7 @@ module PomodoroTracker
     end
     
     def resume_work_button
-      button 'Resume Work' do SideTab.open PomodoroRunning, @activity end
+      button 'Resume Work' do SideTab.open PomodoroRunningTab, @activity end
     end
     
   end

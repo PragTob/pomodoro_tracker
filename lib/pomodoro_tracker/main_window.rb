@@ -7,7 +7,7 @@ def menu
   stack width: MENU_WIDTH do
     # TODO Why doesn't para link work? o_O
     button "Home" do
-      PomodoroTracker::SideTab.open PomodoroTracker::Home
+      PomodoroTracker::SideTab.open PomodoroTracker::HomeTab
     end
     button "Inventory" do open_inventory end
     button 'ToDo Today' do open_today end
@@ -52,6 +52,6 @@ Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
 
   PomodoroTracker::SideTab.setup(@main_content)
   # we start at home!
-  PomodoroTracker::SideTab.open(PomodoroTracker::Home)
+  PomodoroTracker::SideTab.open(PomodoroTracker::HomeTab)
 end
 

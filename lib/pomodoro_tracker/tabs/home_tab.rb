@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class Home < SideTab
+  class HomeTab < SideTab
     def content
       para "Hello world!"
     end

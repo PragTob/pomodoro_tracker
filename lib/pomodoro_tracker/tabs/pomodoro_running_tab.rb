@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class PomodoroRunning < SideTab
+  class PomodoroRunningTab < SideTab
     include DynamicSideTab
     include ClockHelper
 
