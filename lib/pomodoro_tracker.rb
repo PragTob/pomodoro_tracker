@@ -5,6 +5,7 @@ end
 
 require PomodoroTracker::LIB_DIR + 'models/all'
 require PomodoroTracker::LIB_DIR + 'slot'
+require PomodoroTracker::LIB_DIR + 'slot_manager'
 require PomodoroTracker::LIB_DIR + 'dynamic_slot'
 require PomodoroTracker::LIB_DIR + 'tabs/all'
 require PomodoroTracker::LIB_DIR + 'main_window'

@@ -41,7 +41,7 @@ module PomodoroTracker
     end
     
     def resume_work_button
-      button 'Resume Work' do ShoesSlotManager::Slot.open PomodoroRunningTab, @activity end
+      button 'Resume Work' do @slot_manager.open PomodoroRunningTab, @activity end
     end
     
   end

@@ -32,7 +32,7 @@ module PomodoroTracker
     def start_button(activity)
       button 'Start' do
         activity.start
-        ShoesSlotManager::Slot.open PomodoroRunningTab, activity
+        @slot_manager.open PomodoroRunningTab, activity
       end
     end
 

@@ -12,9 +12,13 @@ module ShoesSlotManager
       @slot.append{ @content = stack{content} }
     end
 
-    def initialize(slot, *args)
+    # slot is the slot in which this slot should be displayed
+    # slot_manager is the SlotManager handling the slot
+    #   it can be used to display other slots 
+    def initialize(slot, slot_manager, *args)
       init_data(*args)
       @slot = slot
+      @slot_manager = slot_manager
       init_slot
     end
 
@@ -45,34 +49,6 @@ module ShoesSlotManager
     # redirecting unknown method calls to the shoes app so our gui methods work
     def method_missing(symbol, *args, &blk)
       @slot.app.send(symbol, *args, &blk)
-    end
-
-    class << self
-
-      # setup given the slot where the tab content should be displayed
-      def setup(slot)
-        @loaded_tabs = {}
-        @slot = slot
-      end
-
-      def open(tab, *args)
-        @current_tab.close unless @current_tab.nil?
-        @current_tab = get_tab(tab, *args)
-        @current_tab.open *args
-      end
-
-      private
-
-      def get_tab(tab_class, *args)
-        if @loaded_tabs.include?(tab_class)
-          return @loaded_tabs[tab_class]
-        else
-          # load the class responding to the symbol(the desired tab)
-          # the class could also be required just here, what do you think?
-          @loaded_tabs[tab_class] = tab_class.new(@slot, *args)
-        end
-      end
-
     end
 
   end

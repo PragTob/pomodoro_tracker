@@ -33,14 +33,14 @@ module PomodoroTracker
     def finish_button
       button "Finish" do 
         @activity.finish
-        ShoesSlotManager::Slot.open PomodoroTracker::TodayTab 
+        @slot_manager.open PomodoroTracker::TodayTab 
       end
     end
     
     def pause_button
       button "Pause" do
         @activity.pause
-        ShoesSlotManager::Slot.open PomodoroPausedTab, @activity
+        @slot_manager.open PomodoroPausedTab, @activity
       end
     end
 

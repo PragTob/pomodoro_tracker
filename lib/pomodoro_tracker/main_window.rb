@@ -8,7 +8,7 @@ def menu
   stack width: MENU_WIDTH do
     # TODO Why doesn't para link work? o_O
     button 'Home', width: BUTTON_WIDTH do
-      ShoesSlotManager::Slot.open PomodoroTracker::HomeTab
+      @slot_manager.open PomodoroTracker::HomeTab
     end
     button 'Inventory', width: BUTTON_WIDTH do open_inventory end
     button 'ToDo Today', width: BUTTON_WIDTH do open_today end
@@ -17,11 +17,11 @@ def menu
 end
 
 def open_inventory
-  ShoesSlotManager::Slot.open PomodoroTracker::ActivityInventoryTab, @inventory
+  @slot_manager.open PomodoroTracker::ActivityInventoryTab, @inventory
 end
 
 def open_today
-  ShoesSlotManager::Slot.open PomodoroTracker::TodayTab, @inventory
+  @slot_manager.open PomodoroTracker::TodayTab, @inventory
 end
 
 def close_pomodoro
@@ -51,8 +51,8 @@ Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
   
   general_key_handlers
 
-  ShoesSlotManager::Slot.setup(@main_content)
+  @slot_manager = ShoesSlotManager::SlotManager.new(@main_content)
   # we start at home!
-  ShoesSlotManager::Slot.open(PomodoroTracker::HomeTab)
+  @slot_manager.open(PomodoroTracker::HomeTab)
 end
 
