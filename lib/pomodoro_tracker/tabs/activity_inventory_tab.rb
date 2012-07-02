@@ -1,6 +1,6 @@
 module PomodoroTracker
-  class ActivityInventoryTab < SideTab
-    include DynamicSideTab
+  class ActivityInventoryTab < ShoesSlotManager::Slot
+    include ShoesSlotManager::DynamicSlot
     
     ENTER = "\n"
 

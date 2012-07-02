@@ -1,6 +1,7 @@
 module PomodoroTracker
-  class TodayTab < SideTab
-    include DynamicSideTab
+  class TodayTab < ShoesSlotManager::Slot
+    include ShoesSlotManager::DynamicSlot
+    
     # dynamic is not totally right, we don't get new data but we have to
     # render the content once again (reset) since we need to update it TODO
 
@@ -31,7 +32,7 @@ module PomodoroTracker
     def start_button(activity)
       button 'Start' do
         activity.start
-        SideTab.open PomodoroRunningTab, activity
+        ShoesSlotManager::Slot.open PomodoroRunningTab, activity
       end
     end
 

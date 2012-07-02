@@ -1,6 +1,7 @@
-module PomodoroTracker
-  # A side tab that loads new contents every time it is openend
-  module DynamicSideTab
+module ShoesSlotManager
+  # A slot that totally resets it contents and inits itself with new data
+  # every time it is opened
+  module DynamicSlot
 
     def init_slot
       @slot.append{ @content = stack do;end }

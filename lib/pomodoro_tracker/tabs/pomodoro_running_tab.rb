@@ -1,6 +1,6 @@
 module PomodoroTracker
-  class PomodoroRunningTab < SideTab
-    include DynamicSideTab
+  class PomodoroRunningTab < ShoesSlotManager::Slot
+    include ShoesSlotManager::DynamicSlot
     include ClockHelper
 
     POMODORO_TIME = 5 #25 * 60
@@ -33,14 +33,14 @@ module PomodoroTracker
     def finish_button
       button "Finish" do 
         @activity.finish
-        PomodoroTracker::SideTab.open PomodoroTracker::TodayTab 
+        ShoesSlotManager::Slot.open PomodoroTracker::TodayTab 
       end
     end
     
     def pause_button
       button "Pause" do
         @activity.pause
-        SideTab.open PomodoroPausedTab, @activity
+        ShoesSlotManager::Slot.open PomodoroPausedTab, @activity
       end
     end
 

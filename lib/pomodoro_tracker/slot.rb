@@ -1,12 +1,14 @@
-module PomodoroTracker
-  # tabs as inspired by the hacketyhack code
-  class SideTab
+module ShoesSlotManager
+  # slots/tabs as inspired by the original hacketyhack code
+  # you can define a slot and then show different contents there while hiding
+  # older contents
+  class Slot
 
     # may be overriden to provide some none UI initialization
     def init_data(*args)
     end
 
-    def init_slot(*args)
+    def init_slot
       @slot.append{ @content = stack{content} }
     end
 
@@ -34,9 +36,13 @@ module PomodoroTracker
         content
       end
     end
+    
+    # This method is just here to be overwritten by you
+    # unsurprisingly it's where all the content you want your slot to have goes
+    def content
+    end
 
-    # some real evil knievel hack to get initialize and content with normal shoes
-    # syntax working presumably by _why himself. Just some method redirection ;-)
+    # redirecting unknown method calls to the shoes app so our gui methods work
     def method_missing(symbol, *args, &blk)
       @slot.app.send(symbol, *args, &blk)
     end
