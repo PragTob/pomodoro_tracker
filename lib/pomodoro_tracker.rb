@@ -3,6 +3,7 @@ module PomodoroTracker
   LIB_DIR = File.expand_path('../pomodoro_tracker/', __FILE__) + '/'
 end
 
+require PomodoroTracker::LIB_DIR + 'constants'
 require PomodoroTracker::LIB_DIR + 'models/all'
 require PomodoroTracker::LIB_DIR + 'slot'
 require PomodoroTracker::LIB_DIR + 'slot_manager'

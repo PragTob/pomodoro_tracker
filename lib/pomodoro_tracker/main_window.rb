@@ -1,6 +1,3 @@
-MENU_WIDTH = 100
-BUTTON_WIDTH = MENU_WIDTH - 10
-
 # the main menu displayed on the left hand side
 # opens the specified content in the main window
 # find the corresponding classes in the tabs directory
@@ -41,7 +38,7 @@ def general_key_handlers
 end
 
 # main app
-Shoes.app title: "pomodoro tracker", width: 500, height: 600 do
+Shoes.app title: "pomodoro tracker", width: 700, height: 600 do
   boot
   title "Pomodoros track you must", :align => "center"
   flow do

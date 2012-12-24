@@ -1,7 +1,16 @@
 module PomodoroTracker
   class ActivityInventoryTab < ShoesSlotManager::Slot
     include ShoesSlotManager::DynamicSlot
-    
+
+    DEFAULT_WIDTH = 100
+    DESCRIPTION_LEFT = ::MENU_WIDTH
+    DESCRIPTION_WIDTH = DEFAULT_WIDTH
+    POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
+    POMODORI_WIDTH = DEFAULT_WIDTH
+    ESTIMATE_LEFT = POMODORI_LEFT + POMODORI_WIDTH
+    ESTIMATE_WIDTH = DEFAULT_WIDTH
+    ACTIONS_LEFT = ESTIMATE_LEFT + ESTIMATE_WIDTH
+    ACTIONS_WIDTH = 200
     ENTER = "\n"
 
     def init_data(inventory = nil)
@@ -9,9 +18,9 @@ module PomodoroTracker
     end
 
     def content
-      para "Activity Inventory"
+      title "Activity Inventory"
 
-      para "Description Pomodori Estimate Actions"
+      table_header()
       @activities = stack do
         @activity_inventory.backlog.each{ |activity| new_activity(activity) }
       end
@@ -20,6 +29,16 @@ module PomodoroTracker
     end
 
     private
+
+    def table_header
+      flow do
+        para (strong 'Description'), left: DESCRIPTION_LEFT
+        para (strong 'Pomodori'), left: POMODORI_LEFT
+        para (strong 'Estimate'), left: ESTIMATE_LEFT
+        para (strong 'Actions'), left: ACTIONS_LEFT
+      end
+    end
+
     def do_today_button(activity)
       button "Do Today" do |add_button|
         activity.do_today
@@ -38,11 +57,19 @@ module PomodoroTracker
 
     def new_activity(activity)
       flow do
-        para activity.description
-        para activity.pomodori
-        para activity.estimate
-        do_today_button(activity)
-        delete_button(activity)
+        flow width: DESCRIPTION_WIDTH do
+          para activity.description
+        end
+        flow width: POMODORI_WIDTH do
+          para activity.pomodori
+        end
+        flow width: ESTIMATE_WIDTH do
+          para activity.estimate
+        end
+        flow width: ACTIONS_WIDTH do
+          do_today_button(activity)
+          delete_button(activity)
+        end
       end
     end
 
