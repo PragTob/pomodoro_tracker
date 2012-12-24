@@ -1,6 +1,8 @@
 source :rubygems
 
-gem 'rspec'
+gem 'rspec', '~> 2.12'
 gem 'factory_girl'
 gem 'timecop'
-
+gem 'guard-rspec', '~> 2.3.3'
+gem 'rb-inotify', '~> 0.8.8'
+gem 'libnotify'
