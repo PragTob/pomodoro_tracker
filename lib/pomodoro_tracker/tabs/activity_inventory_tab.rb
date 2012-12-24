@@ -76,6 +76,7 @@ module PomodoroTracker
       @activity_inventory.add activity
       @activities.append { new_activity(activity) }
       @description.text = ''
+      @estimate.text = ''
     end
 
     def keypress_handler
