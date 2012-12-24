@@ -2,15 +2,15 @@ module PomodoroTracker
   class ActivityInventoryTab < ShoesSlotManager::Slot
     include ShoesSlotManager::DynamicSlot
 
-    DEFAULT_WIDTH = 100
-    DESCRIPTION_LEFT = ::MENU_WIDTH
-    DESCRIPTION_WIDTH = DEFAULT_WIDTH
-    POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
-    POMODORI_WIDTH = DEFAULT_WIDTH
-    ESTIMATE_LEFT = POMODORI_LEFT + POMODORI_WIDTH
-    ESTIMATE_WIDTH = DEFAULT_WIDTH
-    ACTIONS_LEFT = ESTIMATE_LEFT + ESTIMATE_WIDTH
+    TABLE_COLUMNS = ['Description', 'Pomodori', 'Estimate', 'Actions']
+    DESCRIPTION_WIDTH = POMODORI_WIDTH = ESTIMATE_WIDTH = 100
     ACTIONS_WIDTH = 200
+    DESCRIPTION_LEFT = ::MENU_WIDTH
+
+    POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
+    ESTIMATE_LEFT = POMODORI_LEFT + POMODORI_WIDTH
+    ACTIONS_LEFT = ESTIMATE_LEFT + ESTIMATE_WIDTH
+
     ENTER = "\n"
 
     def init_data(inventory = nil)
@@ -32,10 +32,9 @@ module PomodoroTracker
 
     def table_header
       flow do
-        para (strong 'Description'), left: DESCRIPTION_LEFT
-        para (strong 'Pomodori'), left: POMODORI_LEFT
-        para (strong 'Estimate'), left: ESTIMATE_LEFT
-        para (strong 'Actions'), left: ACTIONS_LEFT
+        TABLE_COLUMNS.each do |column_name|
+          para strong(column_name), left: const_get(column_name.upcase + '_LEFT')
+        end
       end
     end
 
@@ -57,20 +56,25 @@ module PomodoroTracker
 
     def new_activity(activity)
       flow do
-        flow width: DESCRIPTION_WIDTH do
-          para activity.description
+        TABLE_COLUMNS[0..-2].each do |column_name|
+          activity_column activity, column_name
         end
-        flow width: POMODORI_WIDTH do
-          para activity.pomodori
-        end
-        flow width: ESTIMATE_WIDTH do
-          para activity.estimate
-        end
+        # actions column is kind of special
         flow width: ACTIONS_WIDTH do
           do_today_button(activity)
           delete_button(activity)
         end
       end
+    end
+
+    def activity_column activity, column_name
+      flow width: column_width(column_name) do
+        para activity.send(column_name.downcase)
+      end
+    end
+
+    def column_width(column_name)
+      self.class.const_get((column_name.upcase + "_WIDTH").to_sym)
     end
 
     def add_activity_section
