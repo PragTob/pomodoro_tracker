@@ -48,7 +48,7 @@ module ShoesSlotManager
 
     # redirecting unknown method calls to the shoes app so our gui methods work
     def method_missing(symbol, *args, &blk)
-      @slot.app.send(symbol, *args, &blk)
+      @slot.app.send(symbol, *args, &blk) if @slot.app.respond_to? symbol
     end
 
   end
