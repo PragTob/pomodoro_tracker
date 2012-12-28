@@ -41,7 +41,7 @@ module PomodoroTracker
     def do_today_button(activity)
       button "Do Today" do |add_button|
         activity.do_today
-        add_button.parent.remove
+        add_button.parent.parent.remove
       end
     end
 
@@ -49,7 +49,7 @@ module PomodoroTracker
       button "Delete" do |delete_button|
         if confirm 'Sure to delete this activity?'
           @activity_inventory.remove activity
-          delete_button.parent.remove
+          delete_button.parent.parent.remove
         end
       end
     end
