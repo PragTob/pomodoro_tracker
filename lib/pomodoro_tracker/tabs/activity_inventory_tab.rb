@@ -2,14 +2,14 @@ module PomodoroTracker
   class ActivityInventoryTab < ShoesSlotManager::Slot
     include ShoesSlotManager::DynamicSlot
 
-    TABLE_COLUMNS = ['Description', 'Pomodori', 'Estimate', 'Actions']
+    TABLE_COLUMNS     = ['Description', 'Pomodori', 'Estimate', 'Actions']
     DESCRIPTION_WIDTH = POMODORI_WIDTH = ESTIMATE_WIDTH = 100
-    ACTIONS_WIDTH = 200
-    DESCRIPTION_LEFT = ::MENU_WIDTH
+    ACTIONS_WIDTH     = 200
+    DESCRIPTION_LEFT  = ::MENU_WIDTH
 
     POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
     ESTIMATE_LEFT = POMODORI_LEFT + POMODORI_WIDTH
-    ACTIONS_LEFT = ESTIMATE_LEFT + ESTIMATE_WIDTH
+    ACTIONS_LEFT  = ESTIMATE_LEFT + ESTIMATE_WIDTH
 
     ENTER = "\n"
 

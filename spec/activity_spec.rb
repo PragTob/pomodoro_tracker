@@ -13,10 +13,6 @@ describe PomodoroTracker::Activity do
     @activity.estimate.should_not be nil
   end
 
-  it "has a priority" do
-    @activity.priority.should_not be nil
-  end
-
   it "has 0 pomodori when created" do
     @activity.pomodori.should eq 0
   end
@@ -29,13 +25,20 @@ describe PomodoroTracker::Activity do
     @activity.should_not be_paused
   end
 
-  it "can be created given a description and then the description is correct" do
-    PomodoroTracker::Activity.new("describe me").description
-                                                .should == "describe me"
+  it 'has created set to now' do
+    Timecop.freeze(time = Time.now) do
+      @activity = PomodoroTracker::Activity.new
+    end
+    @activity.created_at.should == time
+  end
+
+  it "can be created given a description" do
+    activity = PomodoroTracker::Activity.new(description: "describe me")
+    activity.description.should == "describe me"
   end
   
-  it "can be created given a description and an estimate" do
-    PomodoroTracker::Activity.new("describe me", 5).estimate.should == 5
+  it "can be created given an estimate" do
+    PomodoroTracker::Activity.new(estimate: 5).estimate.should == 5
   end
   
   it 'is not done today by default' do
@@ -43,11 +46,40 @@ describe PomodoroTracker::Activity do
   end
   
   it 'can be created so that it should get done today' do
-    PomodoroTracker::Activity.new('urgent', 0, true).should be_done_today
+    PomodoroTracker::Activity.new(do_today: true).should be_done_today
+  end
+
+  it 'defaults to an estimate' do
+    PomodoroTracker::Activity.new.estimate.should ==
+        PomodoroTracker::Activity::NO_ESTIMATE_GIVEN
   end
 
   it "has a status of inactive by default" do
     @activity.should be_inactive
+  end
+
+  describe 'creation with all 3 values' do
+
+    A_DESCRIPTION = 'A description'
+    AN_ESTIMATE   = 8
+
+    before :each do
+      @activity = PomodoroTracker::Activity.new description: A_DESCRIPTION,
+                                                do_today:    true,
+                                                estimate:    AN_ESTIMATE
+
+      it 'has the correct description' do
+        @activity.description.should == A_DESCRIPTION
+      end
+
+      it 'is done today' do
+        @activity.should be_done_today
+      end
+
+      it 'has an estimate' do
+        @activity.estimate.should == AN_ESTIMATE
+      end
+    end
   end
   
   describe "actions" do

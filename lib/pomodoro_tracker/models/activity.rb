@@ -1,20 +1,22 @@
 module PomodoroTracker
   class Activity
-    attr_accessor :description, :estimate, :priority
-    attr_reader   :pomodori, :status
+    attr_accessor :description, :estimate
+    attr_reader   :pomodori, :created_at
     
-    PAUSED = :paused
-    INACTIVE = :inactive
-    ACTIVE = :active
-    FINISHED = :finished
+    PAUSED            = :paused
+    INACTIVE          = :inactive
+    ACTIVE            = :active
+    FINISHED          = :finished
+    NO_ESTIMATE_GIVEN = -1
 
     # by default we don't do tasks today
-    def initialize(description = '', estimate = 0, do_today = false)
-      @description = description
-      @pomodori = 0
-      @status = INACTIVE
-      @do_today = do_today
-      @estimate = estimate
+    def initialize(attributes = {})
+      @description = attributes[:description] || ''
+      @do_today    = attributes[:do_today] || false
+      @estimate    = attributes[:estimate] || NO_ESTIMATE_GIVEN
+      @created_at    = Time.now
+      @pomodori    = 0
+      @status      = INACTIVE
     end
 
     def start
@@ -44,11 +46,11 @@ module PomodoroTracker
     end
     
     def paused?
-      status == PAUSED
+      @status == PAUSED
     end
     
     def inactive?
-      status == INACTIVE
+      @status == INACTIVE
     end
     
     def finished?

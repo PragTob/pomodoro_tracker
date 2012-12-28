@@ -40,11 +40,11 @@ describe PomodoroTracker::ActivityInventory do
 
   describe "Enumerable" do
     it "responds to each" do
-      @inventory.should be_respond_to :each
+      @inventory.should respond_to :each
     end
 
     it "has a working each" do
-      4.times { |i| @inventory.add PomodoroTracker::Activity.new i.to_s }
+      4.times { |i| @inventory.add PomodoroTracker::Activity.new }
       i = 0
       @inventory.each { |each| i+=1 }
       i.should == 4
@@ -59,11 +59,13 @@ describe PomodoroTracker::ActivityInventory do
   
     before :each do
       BACKLOG_ACTIVITIES.times do |i| 
-        @inventory.add PomodoroTracker::Activity.new i.to_s
+        @inventory.add FactoryGirl.build :activity
       end
       
-      DO_TODAY_ACTIVITIES.times do |i| 
-        @inventory.add PomodoroTracker::Activity.new 'urgent' + i.to_s, 0, true
+      DO_TODAY_ACTIVITIES.times do |i|
+        activity = FactoryGirl.build :activity
+        activity.do_today
+        @inventory.add activity
       end
     end
     
