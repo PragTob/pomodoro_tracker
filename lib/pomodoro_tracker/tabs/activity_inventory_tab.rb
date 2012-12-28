@@ -103,7 +103,8 @@ module PomodoroTracker
 
     def add_activity
       # '' is converted to 0 when calling to_i so empty works just fine
-      activity = Activity.new(@description.text, @estimate.text.to_i)
+      activity = Activity.new(description: @description.text,
+                              estimate: @estimate.text.to_i)
       @activity_inventory.add activity
       @activities.append { new_activity(activity) }
       @description.text = ''
@@ -112,9 +113,7 @@ module PomodoroTracker
 
     def keypress_handler
       keypress do |key|
-        if key == ENTER
-          add_activity unless @description.text.empty?
-        end
+        add_activity unless @description.text.empty? if key == ENTER
       end
     end
 
