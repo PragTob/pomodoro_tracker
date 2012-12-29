@@ -1,5 +1,5 @@
 module PomodoroTrack
-  Shoes.app title: "pomodoro tracker", width: 700, height: 600 do
+  Shoes.app title: "pomodoro tracker", width: 600, height: 600 do
     # the main menu displayed on the left hand side
     # opens the specified content in the main window
     # find the corresponding classes in the tabs directory

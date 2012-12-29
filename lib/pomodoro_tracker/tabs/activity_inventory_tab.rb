@@ -4,7 +4,7 @@ module PomodoroTracker
 
     TABLE_COLUMNS     = ['Description', 'Pomodori', 'Estimate', 'Actions']
     DESCRIPTION_WIDTH = POMODORI_WIDTH = ESTIMATE_WIDTH = 100
-    ACTIONS_WIDTH     = 200
+    ACTIONS_WIDTH     = 180
     DESCRIPTION_LEFT  = ::MENU_WIDTH
 
     POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
@@ -33,7 +33,8 @@ module PomodoroTracker
     def table_header
       flow do
         TABLE_COLUMNS.each do |column_name|
-          para strong(column_name), left: const_get(column_name.upcase + '_LEFT')
+          left_value = self.class.const_get(column_name.upcase + '_LEFT')
+          para strong(column_name), left:left_value
         end
       end
     end
