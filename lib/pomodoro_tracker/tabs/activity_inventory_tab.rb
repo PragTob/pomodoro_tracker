@@ -20,7 +20,7 @@ module PomodoroTracker
     def content
       title "Activity Inventory"
 
-      table_header()
+      table_header
       @activities = stack do
         @activity_inventory.backlog.each{ |activity| new_activity(activity) }
       end
