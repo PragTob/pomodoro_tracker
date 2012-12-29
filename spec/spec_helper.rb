@@ -3,8 +3,7 @@ require 'timecop'
 
 module PomodoroTracker
   # when require_relative does not work... - rspec version
-  LIB_DIR = File.expand_path('../../lib/pomodoro_tracker', __FILE__) + '/'
-  puts LIB_DIR
+  POMODORO_DIR = File.expand_path('../../lib/pomodoro_tracker', __FILE__) + '/'
 end
 
 require_relative '../lib/pomodoro_tracker/models/all'
