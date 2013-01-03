@@ -20,25 +20,19 @@ module PomodoroTracker
     def content
       title "Activity Inventory"
 
-      table_header
-      @activities = stack do
-        @activity_inventory.backlog.each{ |activity| new_activity(activity) }
+      table_slot = stack do ; end
+      actions_block = Proc.new do |activity|
+        do_today_button activity
+        delete_button activity
       end
+      @activity_table = ActivityTableSlot.new table_slot, nil,
+                                              @activity_inventory.backlog,
+                                              actions_block
 
       add_activity_section
     end
 
     private
-
-    def table_header
-      flow do
-        TABLE_COLUMNS.each do |column_name|
-          left_value = self.class.const_get(column_name.upcase + '_LEFT')
-          para strong(column_name), left:left_value
-        end
-      end
-    end
-
     def do_today_button(activity)
       button "Do Today" do |add_button|
         activity.do_today
@@ -53,29 +47,6 @@ module PomodoroTracker
           delete_button.parent.parent.remove
         end
       end
-    end
-
-    def new_activity(activity)
-      flow do
-        TABLE_COLUMNS[0..-2].each do |column_name|
-          activity_column activity, column_name
-        end
-        # actions column is kind of special
-        flow width: ACTIONS_WIDTH do
-          do_today_button(activity)
-          delete_button(activity)
-        end
-      end
-    end
-
-    def activity_column activity, column_name
-      flow width: column_width(column_name) do
-        para activity.send(column_name.downcase)
-      end
-    end
-
-    def column_width(column_name)
-      self.class.const_get((column_name.upcase + "_WIDTH").to_sym)
     end
 
     def add_activity_section
@@ -107,7 +78,7 @@ module PomodoroTracker
       activity = Activity.new(description: @description.text,
                               estimate: @estimate.text.to_i)
       @activity_inventory.add activity
-      @activities.append { new_activity(activity) }
+      @activity_table.new_activity(activity)
       @description.text = ''
       @estimate.text = ''
     end

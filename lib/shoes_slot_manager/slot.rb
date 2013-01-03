@@ -13,9 +13,9 @@ module ShoesSlotManager
     end
 
     # slot is the slot in which this slot should be displayed
-    # shoes_slot_manager is the SlotManager handling the slot
+    # slot_manager is the SlotManager handling the slot
     #   it can be used to display other slots 
-    def initialize(slot, slot_manager, *args)
+    def initialize(slot, slot_manager = nil, *args)
       init_data(*args)
       @slot = slot
       @slot_manager = slot_manager
