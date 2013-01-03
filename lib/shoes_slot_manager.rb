@@ -4,5 +4,6 @@ module ShoesSlotManager
 end
 
 require ShoesSlotManager::SLOT_DIR + 'slot'
+require ShoesSlotManager::SLOT_DIR + 'manageable_slot'
 require ShoesSlotManager::SLOT_DIR + 'dynamic_slot'
 require ShoesSlotManager::SLOT_DIR + 'slot_manager'

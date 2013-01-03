@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class TodayTab < ShoesSlotManager::Slot
+  class TodayTab < ShoesSlotManager::ManageableSlot
     include ShoesSlotManager::DynamicSlot
     
     # dynamic is not totally right, we don't get new data but we have to
@@ -18,7 +18,7 @@ module PomodoroTracker
         start_button activity
         do_another_day_button activity
       end
-      @activity_table = ActivityTableSlot.new table_slot, nil,
+      @activity_table = ActivityTableSlot.new table_slot,
                                               @activity_inventory.todo_today,
                                               actions_block
 

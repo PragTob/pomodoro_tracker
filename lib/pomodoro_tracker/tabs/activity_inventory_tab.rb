@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class ActivityInventoryTab < ShoesSlotManager::Slot
+  class ActivityInventoryTab < ShoesSlotManager::ManageableSlot
     include ShoesSlotManager::DynamicSlot
 
     TABLE_COLUMNS     = ['Description', 'Pomodori', 'Estimate', 'Actions']
@@ -25,7 +25,7 @@ module PomodoroTracker
         do_today_button activity
         delete_button activity
       end
-      @activity_table = ActivityTableSlot.new table_slot, nil,
+      @activity_table = ActivityTableSlot.new table_slot,
                                               @activity_inventory.backlog,
                                               actions_block
 

@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class HomeTab < ShoesSlotManager::Slot
+  class HomeTab < ShoesSlotManager::ManageableSlot
     def content
       para "Hello world!"
     end

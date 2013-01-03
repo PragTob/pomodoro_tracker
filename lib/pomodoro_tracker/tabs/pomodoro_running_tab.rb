@@ -1,5 +1,5 @@
 module PomodoroTracker
-  class PomodoroRunningTab < ShoesSlotManager::Slot
+  class PomodoroRunningTab < ShoesSlotManager::ManageableSlot
     include ShoesSlotManager::DynamicSlot
     include ClockHelper
 
