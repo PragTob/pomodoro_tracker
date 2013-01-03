@@ -21,14 +21,15 @@ module PomodoroTracker
       @activities_table = stack do
         @activities.each{ |activity| new_activity_column(activity) }
       end
+    end
 
-      def table_header
-        flow do
-          TABLE_COLUMNS.each do |column_name|
-            left_value = self.class.const_get(column_name.upcase + '_LEFT')
-            para strong(column_name), left:left_value
-          end
+    def table_header
+      flow do
+        TABLE_COLUMNS.each do |column_name|
+          left_value = self.class.const_get(column_name.upcase + '_LEFT')
+          para strong(column_name), left:left_value
         end
+        debug 'muhhh'
       end
     end
 
