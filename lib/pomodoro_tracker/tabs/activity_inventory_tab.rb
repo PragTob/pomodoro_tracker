@@ -20,7 +20,7 @@ module PomodoroTracker
     def content
       title "Activity Inventory"
 
-      table_slot = stack do ; end
+      table_slot = stack
       actions_block = Proc.new do |activity|
         do_today_button activity
         delete_button activity

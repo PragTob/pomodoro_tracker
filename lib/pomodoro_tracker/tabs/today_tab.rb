@@ -11,24 +11,21 @@ module PomodoroTracker
     end
 
     def content
-      para "This is your todo list for today"
+      title "This is your todo list for today"
 
-      @activity_inventory.todo_today.each do |activity| 
-        today_activity activity
+      table_slot = stack
+      actions_block = Proc.new do |activity|
+        start_button activity
+        do_another_day_button activity
       end
+      @activity_table = ActivityTableSlot.new table_slot, nil,
+                                              @activity_inventory.todo_today,
+                                              actions_block
 
       para "You might want to add something from your activity inventory"
     end
 
     private
-    def today_activity(activity)
-      flow do
-        para activity.description
-        start_button activity
-        do_another_day_button activity
-      end
-    end
-
     def start_button(activity)
       button 'Start' do
         activity.start
@@ -39,7 +36,7 @@ module PomodoroTracker
     def do_another_day_button(activity)
       button 'Do another day' do |do_another_day_button|
         activity.do_another_day
-        do_another_day_button.parent.remove
+        do_another_day_button.parent.parent.remove
       end
     end
 
