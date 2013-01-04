@@ -50,8 +50,9 @@ describe PomodoroTracker::Day do
   describe "date related" do
 
     before :each do
-      Timecop.freeze(@today = Date.today)
-      @frozen_day = PomodoroTracker::Day.new
+      Timecop.freeze(@today = Date.today) do
+        @frozen_day = PomodoroTracker::Day.new
+      end
     end
 
     it "has the correct date set when created" do
