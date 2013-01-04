@@ -20,7 +20,8 @@ module PomodoroTracker
     end
 
     def remove(activity)
-      @activities.delete(activity)
+      @persistor.remove activity
+      @activities.delete activity
     end
 
     def size

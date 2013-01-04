@@ -17,12 +17,14 @@ describe 'Persistor' do
     @persistor.save(@activity).should be_true
   end
 
-  describe 'retrieving activities' do
+  describe 'with an activity' do
     before :each do
       @persistor.save @activity
     end
 
     let(:retrieved_activity) {retrieved_activity = @persistor.all.first}
+    let(:another_activity) {FactoryGirl.build :activity,
+                                              description: 'another one'}
 
     it 'retrieves the saved activities' do
       @persistor.all.should_not be_nil
@@ -42,7 +44,6 @@ describe 'Persistor' do
     end
 
     it 'can save another activity' do
-      another_activity = FactoryGirl.build :activity, description: 'another one'
       @persistor.save another_activity
       @persistor.all.size.should eq 2
     end
@@ -51,6 +52,25 @@ describe 'Persistor' do
       retrieved_activity.description = 'Muhhh'
       @persistor.save retrieved_activity
       @persistor.all.first.description.should == 'Muhhh'
+    end
+
+    it 'can delete an activity' do
+      @persistor.remove @activity
+      @persistor.all.size.should eq 0
+    end
+
+    it 'returns a truthy value when removing an activity' do
+      @persistor.remove(@activity).should be_true
+    end
+
+    it 'returns a falsy value when trying to remove a non-existant activity' do
+      @persistor.remove(another_activity).should be_false
+    end
+
+    it 'just deletes one activity' do
+      @persistor.save another_activity
+      @persistor.remove @activity
+      @persistor.all.size.should eq 1
     end
   end
 

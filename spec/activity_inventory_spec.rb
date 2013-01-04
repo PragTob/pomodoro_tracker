@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe PomodoroTracker::ActivityInventory do
   before :each do
-    persistor = stub :persistor, all: [], save: true
+    persistor = stub :persistor, all: [], save: true, remove: true
     @inventory = PomodoroTracker::ActivityInventory.new persistor
     @activity = FactoryGirl.build :activity
   end
@@ -35,6 +35,11 @@ describe PomodoroTracker::ActivityInventory do
 
     it "returns the activity as part of all activities" do
       @inventory.activities.should include @activity
+    end
+
+    it 'can be removed' do
+      @inventory.remove @activity
+      @inventory.size.should eq 0
     end
 
   end
@@ -92,7 +97,6 @@ describe PomodoroTracker::ActivityInventory do
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
     end
   end
-    
 
 end
 

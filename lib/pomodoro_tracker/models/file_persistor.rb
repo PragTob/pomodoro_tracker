@@ -9,16 +9,23 @@ module PomodoroTracker
 
     def save(activity)
       @storage.transaction do
-        @storage[activity.created_at] = activity
+        @storage[key(activity)] = activity
       end
     end
 
     def all
-      result = []
       @storage.transaction(true) do
-        @storage.roots.each {|activity| result << @storage[activity]}
+        @storage.roots.map {|activity| @storage[activity]}
       end
-      result
+    end
+
+    def remove(activity)
+      @storage.transaction { @storage.delete key(activity) }
+    end
+
+    # returns the key used to save an activity
+    def key(activity)
+      activity.created_at
     end
 
   end
