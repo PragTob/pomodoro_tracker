@@ -16,9 +16,8 @@ module ShoesSlotManager
 
     def get_tab(tab_class, *args)
       if @loaded_tabs.include?(tab_class)
-        return @loaded_tabs[tab_class]
+        @loaded_tabs[tab_class]
       else
-        # load the class responding to the Constant(the desired tab)
         @loaded_tabs[tab_class] = tab_class.new(@slot, self, *args)
       end
     end
