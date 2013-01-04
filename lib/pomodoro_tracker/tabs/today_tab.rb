@@ -27,14 +27,18 @@ module PomodoroTracker
     private
     def start_button(activity)
       button 'Start' do
-        activity.start
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.start
+        end
         @slot_manager.open PomodoroRunningTab, activity, @activity_inventory
       end
     end
 
     def do_another_day_button(activity)
       button 'Do another day' do |do_another_day_button|
-        activity.do_another_day
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.do_another_day
+        end
         do_another_day_button.parent.parent.remove
       end
     end
