@@ -2,8 +2,8 @@ require_relative 'spec_helper'
 
 describe PomodoroTracker::ActivityInventory do
   before :each do
-    persistor = stub :persistor, all: [], save: true, remove: true
-    @inventory = PomodoroTracker::ActivityInventory.new persistor
+    @persistor = stub :persistor, all: [], save: true, remove: true
+    @inventory = PomodoroTracker::ActivityInventory.new @persistor
     @activity = FactoryGirl.build :activity
   end
 
@@ -71,7 +71,6 @@ describe PomodoroTracker::ActivityInventory do
   end
   
   describe 'accessing different sets of activities' do
-  
     DO_TODAY_ACTIVITIES = 3
     BACKLOG_ACTIVITIES = 4
   
@@ -108,6 +107,22 @@ describe PomodoroTracker::ActivityInventory do
       @inventory.activities.first.finish
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
     end
+  end
+
+  describe 'altering and saving activities with #change_activity' do
+
+    it 'calls save on the persistor mock' do
+      @persistor.should_receive :save
+      @inventory.change_activity(@activity) {}
+    end
+
+    it 'does indeed alter the activity' do
+      @inventory.change_activity(@activity) do |activity|
+        activity.description = 'Changed'
+      end
+      @activity.description.should == 'Changed'
+    end
+
   end
 
 end
