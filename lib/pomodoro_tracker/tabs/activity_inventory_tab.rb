@@ -21,35 +21,16 @@ module PomodoroTracker
       title "Activity Inventory"
 
       table_slot = stack
-      actions_block = Proc.new do |activity|
-        do_today_button activity
-        delete_button activity
-      end
       @activity_table = ActivityTableSlot.new table_slot,
                                               @activity_inventory.backlog,
-                                              actions_block
+                                              @activity_inventory,
+                                              [:do_today, :delete]
 
       add_activity_section
     end
 
     private
-    def do_today_button(activity)
-      button "Do Today" do |do_today_button|
-        @activity_inventory.change_activity(activity) do |activity|
-          activity.do_today
-        end
-        do_today_button.parent.parent.remove
-      end
-    end
 
-    def delete_button(activity)
-      button "Delete" do |delete_button|
-        if confirm 'Sure to delete this activity?'
-          @activity_inventory.remove activity
-          delete_button.parent.parent.remove
-        end
-      end
-    end
 
     def add_activity_section
       stack do

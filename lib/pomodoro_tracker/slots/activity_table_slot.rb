@@ -10,10 +10,21 @@ module PomodoroTracker
     ESTIMATE_LEFT = POMODORI_LEFT + POMODORI_WIDTH
     ACTIONS_LEFT  = ESTIMATE_LEFT + ESTIMATE_WIDTH
 
+    START_BUTTON          = :start
+    DO_TODAY_BUTTON       = :do_today
+    DO_ANOTHER_DAY_BUTTON = :do_another_day
+    REMOVE_BUTTON         = :remove
 
-    def init_data(activities, actions_block)
-      @activities     = activities
-      @actions_block  = actions_block
+
+
+    # activities - the activities to be displayed
+    # activity_inventory - the activity inventory needed to make changes to
+    #                      activities save to the DB
+    # buttons - array with symbols for buttons to be used
+    def init_data(activities, activity_inventory, buttons)
+      @activities         = activities
+      @activity_inventory = activity_inventory
+      @buttons             = buttons
     end
 
     def content
@@ -29,7 +40,6 @@ module PomodoroTracker
           left_value = self.class.const_get(column_name.upcase + '_LEFT')
           para strong(column_name), left:left_value
         end
-        debug 'muhhh'
       end
     end
 
@@ -43,9 +53,16 @@ module PomodoroTracker
           activity_column activity, column_name
         end
         # actions column is kind of special
-        flow width: ACTIONS_WIDTH do
-          @actions_block.call activity
-        end
+        actions_column(activity)
+      end
+    end
+
+    def actions_column(activity)
+      flow width: ACTIONS_WIDTH do
+        start_button(activity) if @buttons.include? START_BUTTON
+        do_another_day_button(activity) if @buttons.include? DO_ANOTHER_DAY_BUTTON
+        do_today_button(activity) if @buttons.include? DO_TODAY_BUTTON
+        remove_button(activity) if @buttons.include? REMOVE_BUTTON
       end
     end
 
@@ -57,6 +74,43 @@ module PomodoroTracker
 
     def column_width(column_name)
       self.class.const_get((column_name.upcase + "_WIDTH").to_sym)
+    end
+
+    private
+    def start_button(activity)
+      button 'Start' do
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.start
+        end
+        @slot_manager.open PomodoroRunningTab, activity, @activity_inventory
+      end
+    end
+
+    def do_another_day_button(activity)
+      button 'Do another day' do |do_another_day_button|
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.do_another_day
+        end
+        do_another_day_button.parent.parent.remove
+      end
+    end
+
+    def do_today_button(activity)
+      button "Do Today" do |do_today_button|
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.do_today
+        end
+        do_today_button.parent.parent.remove
+      end
+    end
+
+    def remove(activity)
+      button "Delete" do |delete_button|
+        if confirm 'Sure to delete this activity?'
+          @activity_inventory.remove activity
+          delete_button.parent.parent.remove
+        end
+      end
     end
 
   end
