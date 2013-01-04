@@ -6,8 +6,13 @@ module PomodoroTracker
     POMODORO_TIME = 5 #25 * 60
     PAUSE_TIME    = 2
 
-    def init_data(activity)
-      @activity = activity
+
+    # the default argument is necessary so we don't have to pass
+    # @activity_inventory over to the paused tab.
+    # This tab should always be opened before the paused tab so that's no prob
+    def init_data(activity, activity_inventory = nil)
+      @activity           =   activity
+      @activity_inventory ||= activity_inventory
     end
 
     def content
@@ -32,14 +37,18 @@ module PomodoroTracker
     
     def finish_button
       button "Finish" do 
-        @activity.finish
+        @activity_inventory.change_activity(@activity) do |activity|
+          @activity.finish
+        end
         @slot_manager.open PomodoroTracker::TodayTab 
       end
     end
     
     def pause_button
       button "Pause" do
-        @activity.pause
+        @activity_inventory.change_activity(@activity) do |activity|
+          @activity.pause
+        end
         @slot_manager.open PomodoroPausedTab, @activity
       end
     end

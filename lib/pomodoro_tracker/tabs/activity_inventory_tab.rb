@@ -34,9 +34,11 @@ module PomodoroTracker
 
     private
     def do_today_button(activity)
-      button "Do Today" do |add_button|
-        activity.do_today
-        add_button.parent.parent.remove
+      button "Do Today" do |do_today_button|
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.do_today
+        end
+        do_today_button.parent.parent.remove
       end
     end
 
