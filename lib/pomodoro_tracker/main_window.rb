@@ -10,11 +10,8 @@ module PomodoroTrack
     def menu
       stack width: MENU_WIDTH do
         # TODO Why doesn't para link work? o_O
-        button 'Home', width: BUTTON_WIDTH do
-          @slot_manager.open PomodoroTracker::HomeTab
-        end
-        button 'Inventory', width: BUTTON_WIDTH do open_inventory end
         button 'ToDo Today', width: BUTTON_WIDTH do open_today end
+        button 'Inventory', width: BUTTON_WIDTH do open_inventory end
         button 'Close', width: BUTTON_WIDTH do close_pomodoro  end
       end
     end
@@ -35,8 +32,6 @@ module PomodoroTrack
     def close_pomodoro
       close if confirm "Are you sure?"
     end
-
-
 
     def general_key_handlers
       keypress do |key|
@@ -59,7 +54,7 @@ module PomodoroTrack
 
     @slot_manager = ShoesSlotManager::SlotManager.new(@main_content)
     # we start at home!
-    @slot_manager.open(PomodoroTracker::HomeTab)
+    open_today
   end
 end
 
