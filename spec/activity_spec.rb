@@ -67,18 +67,18 @@ describe PomodoroTracker::Activity do
       @activity = PomodoroTracker::Activity.new description: A_DESCRIPTION,
                                                 do_today:    true,
                                                 estimate:    AN_ESTIMATE
+    end
 
-      it 'has the correct description' do
-        @activity.description.should == A_DESCRIPTION
-      end
+    it 'has the correct description' do
+      @activity.description.should == A_DESCRIPTION
+    end
 
-      it 'is done today' do
-        @activity.should be_done_today
-      end
+    it 'is done today' do
+      @activity.should be_done_today
+    end
 
-      it 'has an estimate' do
-        @activity.estimate.should == AN_ESTIMATE
-      end
+    it 'has an estimate' do
+      @activity.estimate.should == AN_ESTIMATE
     end
   end
   
