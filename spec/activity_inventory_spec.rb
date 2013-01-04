@@ -19,6 +19,18 @@ describe PomodoroTracker::ActivityInventory do
     @inventory.activities.should be_empty
   end
 
+  it 'can add activities via <<' do
+    @inventory << @activity
+    @inventory.size.should eq 1
+  end
+
+  it 'can add multiple activities via <<' do
+    other_activity    = FactoryGirl.build :activity, description: 'blaah'
+    another_activity  = FactoryGirl.build :activity, description: 'woooo'
+    @inventory << @activity << other_activity << another_activity
+    @inventory.size.should eq 3
+  end
+
   describe 'after adding an activity' do
 
     before :each do
