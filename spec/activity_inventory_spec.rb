@@ -2,7 +2,8 @@ require_relative 'spec_helper'
 
 describe PomodoroTracker::ActivityInventory do
   before :each do
-    @inventory = PomodoroTracker::ActivityInventory.new
+    persistor = stub :persistor, all: [], save: true
+    @inventory = PomodoroTracker::ActivityInventory.new persistor
     @activity = FactoryGirl.build :activity
   end
 

@@ -4,16 +4,18 @@ module PomodoroTracker
 
     attr_reader :activities
 
-    def initialize
-      @activities = []
+    def initialize(persistor)
+      @persistor  = persistor
+      @activities = @persistor.all
     end
 
     def add(activity)
+      @persistor.save activity
       @activities << activity
     end
 
     def <<(activity)
-      @activities << activity
+      add activity
       self
     end
 
