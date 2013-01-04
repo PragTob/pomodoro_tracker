@@ -87,16 +87,23 @@ describe PomodoroTracker::ActivityInventory do
   
   describe 'accessing different sets of activities' do
     DO_TODAY_ACTIVITIES = 3
-    BACKLOG_ACTIVITIES = 4
+    BACKLOG_ACTIVITIES  = 4
+    FINISHED_ACTIVITIES = 2
   
     before :each do
-      BACKLOG_ACTIVITIES.times do |i| 
+      BACKLOG_ACTIVITIES.times do
         @inventory.add FactoryGirl.build :activity
       end
       
-      DO_TODAY_ACTIVITIES.times do |i|
+      DO_TODAY_ACTIVITIES.times do
         activity = FactoryGirl.build :activity
         activity.do_today
+        @inventory.add activity
+      end
+
+      FINISHED_ACTIVITIES.times do
+        activity = FactoryGirl.build :activity
+        activity.finish
         @inventory.add activity
       end
     end
@@ -108,20 +115,27 @@ describe PomodoroTracker::ActivityInventory do
     it 'can retrieve all activities that are still on the inventory list' do
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES
     end
+
+    it 'can retrieve all activities that were finished' do
+      @inventory.finished.size.should eq FINISHED_ACTIVITIES
+    end
     
     it 'can retrieve all activities' do
-      @inventory.activities.size.should eq DO_TODAY_ACTIVITIES + BACKLOG_ACTIVITIES
+      @inventory.activities.size.should eq  DO_TODAY_ACTIVITIES +
+                                            BACKLOG_ACTIVITIES +
+                                            FINISHED_ACTIVITIES
     end
     
     it 'does not include finished activities in the todo_today' do
-      @inventory.find{|activity| activity.done_today? }.finish
+      @inventory.todo_today.first.finish
       @inventory.todo_today.size.should eq DO_TODAY_ACTIVITIES - 1
     end
     
     it 'does not include finished activities in the backlog' do
-      @inventory.activities.first.finish
+      @inventory.backlog.first.finish
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
     end
+
   end
 
   describe 'altering and saving activities with #change_activity' do

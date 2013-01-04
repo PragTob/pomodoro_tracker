@@ -46,7 +46,11 @@ module PomodoroTracker
     end
     
     def backlog
-      @activities.reject{|activity| activity.done_today? || activity.finished?}
+      @activities.select{|activity| !activity.done_today? && !activity.finished?}
+    end
+
+    def finished
+      @activities.select{|activity| activity.finished?}
     end
 
   end
