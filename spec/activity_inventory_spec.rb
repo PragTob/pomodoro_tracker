@@ -7,6 +7,11 @@ describe PomodoroTracker::ActivityInventory do
     @activity = FactoryGirl.build :activity
   end
 
+  it 'sends #all to the persistor when created' do
+    @persistor.should_receive :all
+    PomodoroTracker::ActivityInventory.new @persistor
+  end
+
   it 'is empty when created' do
     @inventory.should be_empty
   end
@@ -22,6 +27,11 @@ describe PomodoroTracker::ActivityInventory do
   it 'can add activities via <<' do
     @inventory << @activity
     @inventory.size.should eq 1
+  end
+
+  it 'calls save on the persistor when adding activities' do
+    @persistor.should_receive(:save).with @activity
+    @inventory.add @activity
   end
 
   it 'can add multiple activities via <<' do
@@ -52,6 +62,11 @@ describe PomodoroTracker::ActivityInventory do
     it 'can be removed' do
       @inventory.remove @activity
       @inventory.size.should eq 0
+    end
+
+    it 'sends remove to the persistor when removing an activity' do
+      @persistor.should_receive(:remove).with @activity
+      @inventory.remove @activity
     end
 
   end
@@ -112,7 +127,7 @@ describe PomodoroTracker::ActivityInventory do
   describe 'altering and saving activities with #change_activity' do
 
     it 'calls save on the persistor mock' do
-      @persistor.should_receive :save
+      @persistor.should_receive(:save).with @activity
       @inventory.change_activity(@activity) {}
     end
 
