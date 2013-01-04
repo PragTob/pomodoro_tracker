@@ -4,10 +4,9 @@ module ShoesSlotManager
   module DynamicSlot
 
     def init_slot
-      @slot.append{ @content = stack do;end }
     end
 
-    # ocerwrite the old content
+    # overwrite the old content
     def open(*args)
       init_data(*args)
       @slot.append do
