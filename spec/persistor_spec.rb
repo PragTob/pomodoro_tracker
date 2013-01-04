@@ -22,6 +22,8 @@ describe 'Persistor' do
       @persistor.save @activity
     end
 
+    let(:retrieved_activity) {retrieved_activity = @persistor.all.first}
+
     it 'retrieves the saved activities' do
       @persistor.all.should_not be_nil
     end
@@ -31,7 +33,7 @@ describe 'Persistor' do
     end
 
     it 'retrieves a full copy of the activity' do
-      retrieved_activity = @persistor.all.first
+
       @activity.instance_variables.each do |instance_variable|
         actual_value    = @activity.instance_variable_get(instance_variable)
         retrieved_value = retrieved_activity.instance_variable_get(instance_variable)
@@ -43,6 +45,12 @@ describe 'Persistor' do
       another_activity = FactoryGirl.build :activity, description: 'another one'
       @persistor.save another_activity
       @persistor.all.size.should eq 2
+    end
+
+    it 'can retrieve and update activities' do
+      retrieved_activity.description = 'Muhhh'
+      @persistor.save retrieved_activity
+      @persistor.all.first.description.should == 'Muhhh'
     end
   end
 
