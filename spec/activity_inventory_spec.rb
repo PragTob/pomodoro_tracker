@@ -7,33 +7,33 @@ describe PomodoroTracker::ActivityInventory do
     @activity = FactoryGirl.build :activity
   end
 
-  it "is empty when created" do
+  it 'is empty when created' do
     @inventory.should be_empty
   end
 
-  it "has a size of 0 when created" do
+  it 'has a size of 0 when created' do
     @inventory.size.should be 0
   end
 
-  it "returns  empty activities after creation" do
+  it 'returns  empty activities after creation' do
     @inventory.activities.should be_empty
   end
 
-  describe "after adding an activity" do
+  describe 'after adding an activity' do
 
     before :each do
       @inventory.add @activity
     end
 
-    it "is not empty after adding an activity" do
+    it 'is not empty after adding an activity' do
       @inventory.should_not be_empty
     end
 
-    it "has a size of 1" do
+    it 'has a size of 1' do
       @inventory.size.should be 1
     end
 
-    it "returns the activity as part of all activities" do
+    it 'returns the activity as part of all activities' do
       @inventory.activities.should include @activity
     end
 
@@ -44,12 +44,12 @@ describe PomodoroTracker::ActivityInventory do
 
   end
 
-  describe "Enumerable" do
-    it "responds to each" do
+  describe 'Enumerable' do
+    it 'responds to each' do
       @inventory.should respond_to :each
     end
 
-    it "has a working each" do
+    it 'has a working each' do
       4.times { |i| @inventory.add PomodoroTracker::Activity.new }
       i = 0
       @inventory.each { |each| i+=1 }
