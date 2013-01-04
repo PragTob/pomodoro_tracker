@@ -24,7 +24,7 @@ module PomodoroTracker
       @activity_table = ActivityTableSlot.new table_slot,
                                               @activity_inventory.backlog,
                                               @activity_inventory,
-                                              [:do_today, :delete]
+                                              [:do_today, :remove]
 
       add_activity_section
     end

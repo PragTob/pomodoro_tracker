@@ -14,6 +14,7 @@ module PomodoroTracker
     DO_TODAY_BUTTON       = :do_today
     DO_ANOTHER_DAY_BUTTON = :do_another_day
     REMOVE_BUTTON         = :remove
+    REANIMATE_BUTTON      = :reanimate
 
 
 
@@ -63,6 +64,7 @@ module PomodoroTracker
         do_another_day_button(activity) if @buttons.include? DO_ANOTHER_DAY_BUTTON
         do_today_button(activity) if @buttons.include? DO_TODAY_BUTTON
         remove_button(activity) if @buttons.include? REMOVE_BUTTON
+        reanimate_button(activity) if @buttons.include? REANIMATE_BUTTON
       end
     end
 
@@ -91,7 +93,7 @@ module PomodoroTracker
         @activity_inventory.change_activity(activity) do |activity|
           activity.do_another_day
         end
-        do_another_day_button.parent.parent.remove
+        remove_row_of do_another_day_button
       end
     end
 
@@ -100,17 +102,34 @@ module PomodoroTracker
         @activity_inventory.change_activity(activity) do |activity|
           activity.do_today
         end
-        do_today_button.parent.parent.remove
+        remove_row_of do_today_button
       end
     end
 
-    def remove(activity)
+    def remove_button(activity)
       button "Delete" do |delete_button|
         if confirm 'Sure to delete this activity?'
           @activity_inventory.remove activity
-          delete_button.parent.parent.remove
+          remove_row_of delete_button
         end
       end
+    end
+
+    def reanimate_button(activity)
+      button "Reanimate" do |reanimate_button|
+        @activity_inventory.change_activity(activity) do |activity|
+          activity.reanimate
+        end
+        remove_row_of(reanimate_button)
+      end
+    end
+
+    def remove_row_of(button)
+      button.parent.parent.remove
+    end
+
+    def change_activity(activity, &block)
+      @activity_inventory.change_activity(activity, block)
     end
 
   end

@@ -25,7 +25,7 @@ describe PomodoroTracker::Activity do
     @activity.should_not be_paused
   end
 
-  it 'has created set to now' do
+  it 'has created_at set to now' do
     Timecop.freeze(time = Time.now) do
       @activity = PomodoroTracker::Activity.new
     end
@@ -110,14 +110,29 @@ describe PomodoroTracker::Activity do
         @activity.should be_active
       end
 
-      it 'can be finished' do
-        @activity.finish
-        @activity.should be_finished
-      end
-      
-      it 'has a pomodri count of 1 after one finish' do
-        @activity.finish
-        @activity.pomodori.should be 1
+
+      describe 'finishing' do
+        before :each do
+          @activity.finish
+        end
+
+        it 'is finished' do
+          @activity.should be_finished
+        end
+
+        it 'has a pomodri count of 1' do
+          @activity.pomodori.should be 1
+        end
+
+        it 'can be reanimated and is then inactive' do
+          @activity.reanimate
+          @activity.should be_inactive
+        end
+
+        it 'still has a pomodori count of 1 after reanimation' do
+          @activity.reanimate
+          @activity.pomodori.should eq 1
+        end
       end
 
     end

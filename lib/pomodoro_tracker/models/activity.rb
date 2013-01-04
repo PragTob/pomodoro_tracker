@@ -41,10 +41,15 @@ module PomodoroTracker
       @do_today = false
     end
 
+    def reanimate
+      @status   = INACTIVE
+      @do_today = false
+    end
+
     def done_today?
       @do_today
     end
-    
+
     def paused?
       @status == PAUSED
     end
