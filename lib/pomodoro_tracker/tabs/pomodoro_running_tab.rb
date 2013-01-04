@@ -44,10 +44,6 @@ module PomodoroTracker
       end
     end
 
-    def add_task
-      @task = edit_line
-    end
-    
     def working_info
       "You are working on the activity '#{@activity.description}'. " +
       "You are already working on this activity for #{@activity.pomodori} pomodori. " +

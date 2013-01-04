@@ -11,10 +11,10 @@ module PomodoroTracker
 
     # by default we don't do tasks today
     def initialize(attributes = {})
-      @description = attributes[:description] || ''
-      @do_today    = attributes[:do_today] || false
-      @estimate    = attributes[:estimate] || NO_ESTIMATE_GIVEN
-      @created_at    = Time.now
+      @description = attributes[:description]  || ''
+      @do_today    = attributes[:do_today]     || false
+      @estimate    = attributes[:estimate]     || NO_ESTIMATE_GIVEN
+      @created_at  = Time.now
       @pomodori    = 0
       @status      = INACTIVE
     end
@@ -33,16 +33,16 @@ module PomodoroTracker
       @pomodori += 1
     end
     
-    def done_today?
-      @do_today
-    end
-    
     def do_today
       @do_today = true
     end
     
     def do_another_day
       @do_today = false
+    end
+
+    def done_today?
+      @do_today
     end
     
     def paused?
