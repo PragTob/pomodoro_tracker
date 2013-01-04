@@ -2,4 +2,5 @@ Gemfile.lock
 .idea/
 tmp
 coverage
+store.pstore
 

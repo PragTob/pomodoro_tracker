@@ -1,4 +1,8 @@
 module PomodoroTrack
+
+  STORAGE_LOCATION = File.expand_path('../../..', __FILE__) + '/store.pstore'
+  puts STORAGE_LOCATION
+
   Shoes.app title: "pomodoro tracker", width: 600, height: 600 do
     # the main menu displayed on the left hand side
     # opens the specified content in the main window
@@ -15,6 +19,11 @@ module PomodoroTrack
       end
     end
 
+    def boot
+      persistor  = PomodoroTracker::FilePersistor.new STORAGE_LOCATION
+      @inventory = PomodoroTracker::ActivityInventory.new persistor
+    end
+
     def open_inventory
       @slot_manager.open PomodoroTracker::ActivityInventoryTab, @inventory
     end
@@ -27,9 +36,7 @@ module PomodoroTrack
       close if confirm "Are you sure?"
     end
 
-    def boot
-      @inventory = PomodoroTracker::ActivityInventory.new
-    end
+
 
     def general_key_handlers
       keypress do |key|
