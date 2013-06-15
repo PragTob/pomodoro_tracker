@@ -1,10 +1,10 @@
-require 'pstore'
+require 'yaml/store'
 
 module PomodoroTracker
   class FilePersistor
 
     def initialize(file_path)
-      @storage = PStore.new file_path
+      @storage = YAML::Store.new file_path
     end
 
     def save(activity)
