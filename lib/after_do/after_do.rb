@@ -33,7 +33,7 @@ module AfterDo
   def redefine_method_with_callback(aliased_name, method, block)
     define_singleton_method method do |*args|
       return_value = send(aliased_name, *args)
-      block.call
+      block.call *args
       return_value
     end
   end

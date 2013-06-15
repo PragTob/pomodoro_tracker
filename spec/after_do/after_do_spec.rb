@@ -48,7 +48,6 @@ describe AfterDo do
       mockie.should_receive :call_method
     end
 
-
     it 'can handle methods with a parameter' do
       after_do.after :one do mockie.call_method end
       after_do.one 5
@@ -56,6 +55,20 @@ describe AfterDo do
 
     it 'can handle methods with 2 parameters' do
       after_do.after :two do mockie.call_method end
+      after_do.two 5, 8
+    end
+  end
+
+  describe 'with parameters for the given block' do
+    it 'can handle one block parameter' do
+      mockie.should_receive(:call_method).with(5)
+      after_do.after :one do |i| mockie.call_method i end
+      after_do.one 5
+    end
+
+    it 'can handle two block parameters' do
+      mockie.should_receive(:call_method).with(5, 8)
+      after_do.after :two do |i, j| mockie.call_method i, j end
       after_do.two 5, 8
     end
   end
