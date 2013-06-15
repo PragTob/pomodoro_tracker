@@ -25,16 +25,30 @@ module AfterDo
   end
 
   def rename_old_method(old_name, new_name)
-    singleton_class.class_eval do
+    class_to_modify.class_eval do
       alias_method new_name, old_name
     end
   end
 
+  def class_to_modify
+    # if after is called on a class we want to modify all instances of that
+    # class.
+    # If it is called on a single object on the other hand, we just want to
+    # modify that one object.
+    if self.class == Class
+      self
+    else
+      self.singleton_class
+    end
+  end
+
   def redefine_method_with_callback(aliased_name, method, block)
-    define_singleton_method method do |*args|
-      return_value = send(aliased_name, *args)
-      block.call *args
-      return_value
+    class_to_modify.class_eval do
+      define_method method do |*args|
+        return_value = send(aliased_name, *args)
+        block.call *args
+        return_value
+      end
     end
   end
 end

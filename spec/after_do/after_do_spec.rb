@@ -5,7 +5,6 @@ describe AfterDo do
   let(:mockie) {mock}
 
   class Dummy
-
     def zero
       0
     end
@@ -74,7 +73,6 @@ describe AfterDo do
   end
 
   describe 'multiple methods' do
-
     def call_all_3_methods
       after_do.zero
       after_do.one 4
@@ -91,6 +89,20 @@ describe AfterDo do
       expect do
         after_do.after do mockie.call_method end
       end.to raise_error ArgumentError
+    end
+  end
+
+  describe 'including into a class' do
+
+    # a new class to avoid messing with the old one
+    class Dummy2 < Dummy ; end
+
+    it 'still works to call callbacks' do
+      Dummy2.extend AfterDo
+      mockie.should_receive :call_method
+      Dummy2.after :zero do mockie.call_method end
+      instance = Dummy2.new
+      instance.zero
     end
 
   end
