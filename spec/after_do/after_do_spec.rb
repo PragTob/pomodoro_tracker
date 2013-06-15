@@ -20,4 +20,10 @@ describe AfterDo do
     after = after_do.object_id
     after.should eq before
   end
+
+  it 'does not change the behaviour of other objects of this class' do
+    after_do.after :object_id do mockie.call_method end
+    mockie.should_not_receive :call_method
+    Object.new.object_id
+  end
 end
