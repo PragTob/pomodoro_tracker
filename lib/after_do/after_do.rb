@@ -8,10 +8,15 @@ module AfterDo
   #  @
   #end
 
-  def after(method, &block)
-    aliased_name = alias_name method
-    rename_old_method(method, aliased_name)
-    redefine_method_with_callback(aliased_name, method, block)
+  def after(*methods, &block)
+    if methods.empty?
+      raise ArgumentError, 'after takes at least one method name!'
+    end
+    methods.each do |method|
+      aliased_name = alias_name method
+      rename_old_method(method, aliased_name)
+      redefine_method_with_callback(aliased_name, method, block)
+    end
   end
 
   private
