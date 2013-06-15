@@ -10,5 +10,6 @@ module PomodoroTracker
 end
 
 require_relative '../lib/pomodoro_tracker/models/all'
-require_relative 'factories'
+require_relative 'pomodoro_tracker/factories'
+require_relative '../lib/after_do/after_do'
 
