@@ -26,8 +26,8 @@ module AfterDo
   end
 
   def redefine_method_with_callback(aliased_name, method, block)
-    define_singleton_method method do
-      return_value = send(aliased_name)
+    define_singleton_method method do |*args|
+      return_value = send(aliased_name, *args)
       block.call
       return_value
     end

@@ -26,4 +26,32 @@ describe AfterDo do
     mockie.should_not_receive :call_method
     Object.new.object_id
   end
+
+  describe 'with parameterw' do
+    class Dummy
+      def one(param)
+        param
+      end
+
+      def two(param1, param2)
+        param2
+      end
+    end
+
+    before :each do
+      mockie.should_receive :call_method
+    end
+
+    let(:after_param) {Dummy.new.extend AfterDo}
+
+    it 'can handle methods with a parameter' do
+      after_param.after :one do mockie.call_method end
+      after_param.one 5
+    end
+
+    it 'can handle methods with 2 parameters' do
+      after_param.after :two do mockie.call_method end
+      after_param.two 5, 8
+    end
+  end
 end
