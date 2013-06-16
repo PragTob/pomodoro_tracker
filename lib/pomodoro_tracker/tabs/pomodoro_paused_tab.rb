@@ -6,8 +6,9 @@ module PomodoroTracker
     SMALL_PAUSE_TIME = 2 #60 * 5
     LARGE_PAUSE_TIME = 3 * SMALL_PAUSE_TIME
     
-    def init_data(activity)
+    def init_data(activity, options)
       @activity = activity
+      @options = options
     end
     
     def content
@@ -19,9 +20,9 @@ module PomodoroTracker
     def pause_time
       # take a big break every 3 pomodori
       if (@activity.pomodori % 3) == 0
-        @seconds = LARGE_PAUSE_TIME
+        @seconds = @options.extended_pause_time
       else
-        @seconds = SMALL_PAUSE_TIME
+        @seconds = @options.normal_pause_time
       end
     end
     

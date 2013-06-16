@@ -1,6 +1,7 @@
-module PomodoroTrack
+module PomodoroTracker
 
   STORAGE_LOCATION = File.expand_path('../../..', __FILE__) + '/activities.yml'
+  OPTIONS_LOCATION = File.expand_path('../../..', __FILE__) + '/options.yml'
 
   Shoes.app title: "pomodoro tracker", width: 600, height: 600 do
     # the main menu displayed on the left hand side
@@ -12,30 +13,36 @@ module PomodoroTrack
         button 'ToDo Today', width: BUTTON_WIDTH do open_today end
         button 'Inventory', width: BUTTON_WIDTH do open_inventory end
         button 'Finished', width: BUTTON_WIDTH do open_finished end
+        button 'Options', width: BUTTON_WIDTH do open_options end
         button 'Close', width: BUTTON_WIDTH do close_pomodoro  end
       end
     end
 
     def boot
-      persistor  = PomodoroTracker::FilePersistor.new STORAGE_LOCATION
-      @inventory = PomodoroTracker::ActivityInventory.new persistor
-      PomodoroTracker::Activity.extend AfterDo
-      PomodoroTracker::Activity.after :start, :pause, :finish, :resurrect,
+      @options = Options.new OPTIONS_LOCATION
+      persistor  = FilePersistor.new STORAGE_LOCATION
+      @inventory = ActivityInventory.new persistor
+      Activity.extend AfterDo
+      Activity.after :start, :pause, :finish, :resurrect,
                                       :do_today, :do_another_day do |activity|
         persistor.save activity
       end
     end
 
     def open_inventory
-      @slot_manager.open PomodoroTracker::ActivityInventoryTab, @inventory
+      @slot_manager.open ActivityInventoryTab, @inventory
     end
 
     def open_today
-      @slot_manager.open PomodoroTracker::TodayTab, @inventory
+      @slot_manager.open TodayTab, @inventory, @options
     end
 
     def open_finished
-      @slot_manager.open PomodoroTracker::FinishedActivitiesTab, @inventory
+      @slot_manager.open FinishedActivitiesTab, @inventory
+    end
+
+    def open_options
+      @slot_manager.open OptionsTab, @options
     end
 
     def close_pomodoro
