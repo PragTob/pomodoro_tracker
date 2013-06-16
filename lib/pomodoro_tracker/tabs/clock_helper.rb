@@ -1,6 +1,9 @@
 module PomodoroTracker
   module ClockHelper
-    
+
+    FINISH_SOUND = File.expand_path('../../../../sounds/alarm-clock.wav',
+                                    __FILE__)
+
     # the seconds until &block gets executed
     def init_clock(seconds, &block)
       @seconds = seconds
@@ -20,13 +23,18 @@ module PomodoroTracker
       @timer = animate(1) do
         @seconds -= 1
         display_time
-        if @seconds == 0
-          @timer.stop
+        if time_ran_out?
+          stop_clock
+          play_finish_sound
           block.call
         end
       end
     end
-    
+
+    def time_ran_out?
+      @seconds == 0
+    end
+
     def stop_clock
       @timer.stop
     end
@@ -34,6 +42,13 @@ module PomodoroTracker
     def close
       stop_clock
       super
+    end
+
+    # needs the sox package http://sox.sourceforge.net/
+    def play_finish_sound
+      # new thread (the &) is needed so it does not block
+      command = 'play ' + FINISH_SOUND + ' &'
+      system command
     end
   end
 end
