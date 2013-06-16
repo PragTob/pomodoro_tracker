@@ -46,7 +46,7 @@ module AfterDo
     class_to_modify.class_eval do
       define_method method do |*args|
         return_value = send(aliased_name, *args)
-        block.call *args
+        block.call *args, self
         return_value
       end
     end

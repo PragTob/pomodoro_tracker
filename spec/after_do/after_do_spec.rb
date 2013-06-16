@@ -93,7 +93,6 @@ describe AfterDo do
   end
 
   describe 'including into a class' do
-
     # a new class to avoid messing with the old one
     class Dummy2 < Dummy ; end
 
@@ -104,6 +103,21 @@ describe AfterDo do
       instance = Dummy2.new
       instance.zero
     end
+  end
 
+  describe 'it can get a hold of self, if needbe' do
+    it 'works for a method without arguments' do
+      mockie.should_receive(:call_method).with(after_do)
+      after_do.after :zero do |object| mockie.call_method(object) end
+      after_do.zero
+    end
+
+    it 'works for a method with 2 arguments' do
+      mockie.should_receive(:call_method).with(1, 2, after_do)
+      after_do.after :two do |first, second, object|
+        mockie.call_method(first, second, object)
+      end
+      after_do.two 1, 2
+    end
   end
 end
