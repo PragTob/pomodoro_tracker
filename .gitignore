@@ -3,4 +3,5 @@ Gemfile.lock
 tmp
 coverage
 store.pstore
+activities.yml
 

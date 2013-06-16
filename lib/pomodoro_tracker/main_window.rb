@@ -1,7 +1,6 @@
 module PomodoroTrack
 
-  STORAGE_LOCATION = File.expand_path('../../..', __FILE__) + '/store.pstore'
-  puts STORAGE_LOCATION
+  STORAGE_LOCATION = File.expand_path('../../..', __FILE__) + '/activities.yml'
 
   Shoes.app title: "pomodoro tracker", width: 600, height: 600 do
     # the main menu displayed on the left hand side
