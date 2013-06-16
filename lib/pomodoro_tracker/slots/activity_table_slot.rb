@@ -13,7 +13,8 @@ module PomodoroTracker
     START_BUTTON          = :start
     DO_TODAY_BUTTON       = :do_today
     DO_ANOTHER_DAY_BUTTON = :do_another_day
-    REMOVE_BUTTON         = :remove
+    DELETE_BUTTON         = :delete
+    RESURRECT_BUTTON      = :resurrect
 
 
 
@@ -63,7 +64,8 @@ module PomodoroTracker
         start_button(activity) if @buttons.include? START_BUTTON
         do_another_day_button(activity) if @buttons.include? DO_ANOTHER_DAY_BUTTON
         do_today_button(activity) if @buttons.include? DO_TODAY_BUTTON
-        remove_button(activity) if @buttons.include? REMOVE_BUTTON
+        resurrect_button(activity) if @buttons.include? RESURRECT_BUTTON
+        delete_button(activity) if @buttons.include? DELETE_BUTTON
       end
     end
 
@@ -99,12 +101,19 @@ module PomodoroTracker
       end
     end
 
-    def remove(activity)
+    def delete_button(activity)
       button "Delete" do |delete_button|
         if confirm 'Sure to delete this activity?'
           @activity_inventory.remove activity
           delete_button.parent.parent.remove
         end
+      end
+    end
+
+    def resurrect_button(activity)
+      button 'Resurrect' do |resurrect_button|
+        activity.resurrect
+        resurrect_button.parent.parent.remove
       end
     end
 

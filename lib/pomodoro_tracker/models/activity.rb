@@ -29,8 +29,13 @@ module PomodoroTracker
     end
 
     def finish
+      do_another_day
       @status = FINISHED
       @pomodori += 1
+    end
+
+    def resurrect
+      @status = PAUSED
     end
     
     def do_today

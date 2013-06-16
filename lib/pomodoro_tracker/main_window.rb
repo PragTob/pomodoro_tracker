@@ -11,6 +11,7 @@ module PomodoroTrack
         # TODO Why doesn't para link work? o_O
         button 'ToDo Today', width: BUTTON_WIDTH do open_today end
         button 'Inventory', width: BUTTON_WIDTH do open_inventory end
+        button 'Finished', width: BUTTON_WIDTH do open_finished end
         button 'Close', width: BUTTON_WIDTH do close_pomodoro  end
       end
     end
@@ -19,8 +20,8 @@ module PomodoroTrack
       persistor  = PomodoroTracker::FilePersistor.new STORAGE_LOCATION
       @inventory = PomodoroTracker::ActivityInventory.new persistor
       PomodoroTracker::Activity.extend AfterDo
-      PomodoroTracker::Activity.after :start, :pause, :finish, :do_today,
-                                    :do_another_day do |activity|
+      PomodoroTracker::Activity.after :start, :pause, :finish, :resurrect,
+                                      :do_today, :do_another_day do |activity|
         persistor.save activity
       end
     end
@@ -31,6 +32,10 @@ module PomodoroTrack
 
     def open_today
       @slot_manager.open PomodoroTracker::TodayTab, @inventory
+    end
+
+    def open_finished
+      @slot_manager.open PomodoroTracker::FinishedActivitiesTab, @inventory
     end
 
     def close_pomodoro

@@ -110,14 +110,28 @@ describe PomodoroTracker::Activity do
         @activity.should be_active
       end
 
-      it 'can be finished' do
-        @activity.finish
-        @activity.should be_finished
-      end
-      
-      it 'has a pomodri count of 1 after one finish' do
-        @activity.finish
-        @activity.pomodori.should be 1
+      describe 'after finishing' do
+        before :each do
+          @activity.finish
+        end
+
+        it 'is finished' do
+          @activity.should be_finished
+        end
+
+        it 'has a pomodri count of 1 after one finish' do
+          @activity.pomodori.should be 1
+        end
+
+        it 'can be resurrected' do
+          @activity.resurrect
+          @activity.should_not be_finished
+        end
+
+        it 'keeps the pomodori count after resurrection' do
+          @activity.resurrect
+          @activity.pomodori.should be 1
+        end
       end
 
     end
@@ -132,6 +146,11 @@ describe PomodoroTracker::Activity do
         @activity.do_today
         @activity.do_another_day
         
+        @activity.should_not be_done_today
+      end
+
+      it 'shall not be done today after finishing' do
+        @activity.finish
         @activity.should_not be_done_today
       end
     end

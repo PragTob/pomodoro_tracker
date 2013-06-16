@@ -135,6 +135,16 @@ describe PomodoroTracker::ActivityInventory do
       @inventory.backlog.first.finish
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
     end
+
+    it 'does not include ressurected activities in the finsihed activities' do
+      @inventory.finished.first.resurrect
+      @inventory.finished.size.should eq FINISHED_ACTIVITIES - 1
+    end
+
+    it 'includes resurrected activities in the backlog' do
+      @inventory.finished.first.resurrect
+      @inventory.backlog.size.should eq BACKLOG_ACTIVITIES + 1
+    end
   end
 
 end
