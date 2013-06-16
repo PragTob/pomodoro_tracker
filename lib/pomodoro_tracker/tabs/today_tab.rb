@@ -14,6 +14,7 @@ module PomodoroTracker
 
       table_slot = stack
       @activity_table = ActivityTableSlot.new table_slot,
+                                              @slot_manager,
                                               @activity_inventory.todo_today,
                                               @activity_inventory,
                                               [:start, :do_another_day]

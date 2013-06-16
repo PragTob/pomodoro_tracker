@@ -18,6 +18,11 @@ module PomodoroTrack
     def boot
       persistor  = PomodoroTracker::FilePersistor.new STORAGE_LOCATION
       @inventory = PomodoroTracker::ActivityInventory.new persistor
+      PomodoroTracker::Activity.extend AfterDo
+      PomodoroTracker::Activity.after :start, :pause, :finish, :do_today,
+                                    :do_another_day do |activity|
+        persistor.save activity
+      end
     end
 
     def open_inventory

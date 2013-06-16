@@ -21,7 +21,8 @@ module PomodoroTracker
     # activity_inventory - the activity inventory needed to make changes to
     #                      activities save to the DB
     # buttons - array with symbols for buttons to be used
-    def init_data(activities, activity_inventory, buttons)
+    def init_data(slot_manager = nil, activities, activity_inventory, buttons)
+      @slot_manager       = slot_manager
       @activities         = activities
       @activity_inventory = activity_inventory
       @buttons             = buttons
@@ -79,27 +80,21 @@ module PomodoroTracker
     private
     def start_button(activity)
       button 'Start' do
-        @activity_inventory.change_activity(activity) do |activity|
-          activity.start
-        end
+        activity.start
         @slot_manager.open PomodoroRunningTab, activity, @activity_inventory
       end
     end
 
     def do_another_day_button(activity)
       button 'Do another day' do |do_another_day_button|
-        @activity_inventory.change_activity(activity) do |activity|
-          activity.do_another_day
-        end
+        activity.do_another_day
         do_another_day_button.parent.parent.remove
       end
     end
 
     def do_today_button(activity)
       button "Do Today" do |do_today_button|
-        @activity_inventory.change_activity(activity) do |activity|
-          activity.do_today
-        end
+        activity.do_today
         do_today_button.parent.parent.remove
       end
     end

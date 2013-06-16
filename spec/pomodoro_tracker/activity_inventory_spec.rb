@@ -135,23 +135,6 @@ describe PomodoroTracker::ActivityInventory do
       @inventory.backlog.first.finish
       @inventory.backlog.size.should eq BACKLOG_ACTIVITIES - 1 
     end
-
-  end
-
-  describe 'altering and saving activities with #change_activity' do
-
-    it 'calls save on the persistor mock' do
-      @persistor.should_receive(:save).with @activity
-      @inventory.change_activity(@activity) {}
-    end
-
-    it 'does indeed alter the activity' do
-      @inventory.change_activity(@activity) do |activity|
-        activity.description = 'Changed'
-      end
-      @activity.description.should == 'Changed'
-    end
-
   end
 
 end

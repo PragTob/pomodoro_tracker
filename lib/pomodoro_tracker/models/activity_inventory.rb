@@ -24,11 +24,6 @@ module PomodoroTracker
       @activities.delete activity
     end
 
-    def change_activity(activity, &block)
-      block.call activity
-      @persistor.save activity
-    end
-
     def size
       @activities.size
     end

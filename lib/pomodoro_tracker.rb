@@ -5,6 +5,7 @@ module PomodoroTracker
 end
 
 require PomodoroTracker::LIB_DIR      + 'shoes_slot_manager'
+require PomodoroTracker::LIB_DIR      + 'after_do'
 require PomodoroTracker::POMODORO_DIR + 'constants'
 require PomodoroTracker::POMODORO_DIR + 'models/all'
 require PomodoroTracker::POMODORO_DIR + 'tabs/all'
