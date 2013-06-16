@@ -3,9 +3,6 @@ module PomodoroTracker
     include ShoesSlotManager::DynamicSlot
     include ClockHelper
     
-    SMALL_PAUSE_TIME = 2 #60 * 5
-    LARGE_PAUSE_TIME = 3 * SMALL_PAUSE_TIME
-    
     def init_data(activity, options)
       @activity = activity
       @options = options
@@ -14,18 +11,22 @@ module PomodoroTracker
     def content
       init_clock(pause_time) { display_pause_end }
       @info = para pause_info
+      @quick = flow do resume_work_button end
     end
-    
+
     private
     def pause_time
-      # take a big break every 3 pomodori
-      if (@activity.pomodori % 3) == 0
-        @seconds = @options.extended_pause_time
+      if time_for_extended_pause?
+        @options.extended_pause_time
       else
-        @seconds = @options.normal_pause_time
+        @options.normal_pause_time
       end
     end
-    
+
+    def time_for_extended_pause?
+      (@activity.pomodori % 3) == 0
+    end
+
     def pause_info
       "You shouldn't be reading this right now! " + 
       "It's time for a break and therefore you should step aways from the " +
@@ -33,6 +34,7 @@ module PomodoroTracker
     end
     
     def display_pause_end
+      @quick.hide
       @info.replace pause_end_info
       @content.append { resume_work_button }
     end

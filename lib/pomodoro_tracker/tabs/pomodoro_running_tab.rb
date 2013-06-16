@@ -3,10 +3,6 @@ module PomodoroTracker
     include ShoesSlotManager::DynamicSlot
     include ClockHelper
 
-    POMODORO_TIME = 5 #25 * 60
-    PAUSE_TIME    = 2
-
-
     # the default argument is necessary so we don't have to pass
     # @activity_inventory over to the paused tab.
     # This tab should always be opened before the paused tab so that's no prob
@@ -18,26 +14,23 @@ module PomodoroTracker
 
     def content
       init_clock(@options.pomodoro_time) { display_pomodoro_end }
-      @info = para working_info 
-    end
-
-    def close
-      stop_clock
-      super
+      @info = para working_info
+      @quick = flow do quick_finish end
     end
 
     private
     def display_pomodoro_end
+      @quick.hide
       @content.append do
         @end_buttons = flow do
-          finish_button
+          finish_button 'Finish'
           pause_button
         end
       end
     end
     
-    def finish_button
-      button "Finish" do 
+    def finish_button(label)
+      button label do
         @activity.finish
         @slot_manager.open PomodoroTracker::TodayTab
       end
@@ -54,6 +47,10 @@ module PomodoroTracker
       "You are working on the activity '#{@activity.description}'. " +
       "You are already working on this activity for #{@activity.pomodori} pomodori. " +
       "You estimated that this activity would take you #{@activity.estimate} pomodori to finish."
+    end
+
+    def quick_finish
+      finish_button 'Finish early'
     end
 
   end

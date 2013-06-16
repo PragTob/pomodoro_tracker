@@ -30,6 +30,10 @@ module PomodoroTracker
     def stop_clock
       @timer.stop
     end
-    
+
+    def close
+      stop_clock
+      super
+    end
   end
 end
