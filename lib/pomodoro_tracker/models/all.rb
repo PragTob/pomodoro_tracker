@@ -5,4 +5,5 @@ require PomodoroTracker::POMODORO_DIR + 'models/file_persistor'
 require PomodoroTracker::POMODORO_DIR + 'models/activity'
 require PomodoroTracker::POMODORO_DIR + 'models/activity_inventory'
 require PomodoroTracker::POMODORO_DIR + 'models/day'
+require PomodoroTracker::POMODORO_DIR + 'models/options'
 

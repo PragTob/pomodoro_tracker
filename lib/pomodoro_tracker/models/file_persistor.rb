@@ -23,7 +23,7 @@ module PomodoroTracker
       @storage.transaction { @storage.delete key(activity) }
     end
 
-    # returns the key used to save an activity
+    private
     def key(activity)
       activity.created_at
     end
