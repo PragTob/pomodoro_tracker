@@ -3,7 +3,7 @@
 # E.g. it shall be used in the Pomodoro Tracker for persistance
 
 module AfterDo
-  ALIAS_PREFIX = 'orig_'
+  ALIAS_PREFIX = '__after_do_orig_'
   #def self.extended(klass)
   #  @
   #end
@@ -27,6 +27,7 @@ module AfterDo
   def rename_old_method(old_name, new_name)
     class_to_modify.class_eval do
       alias_method new_name, old_name
+      private new_name
     end
   end
 

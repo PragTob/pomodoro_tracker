@@ -41,6 +41,12 @@ describe AfterDo do
     Dummy.new.zero
   end
 
+  it 'marks the copied method as private' do
+    after_do.after :zero do end
+    copied_method_name = (AfterDo::ALIAS_PREFIX + 'zero').to_sym
+    after_do.respond_to?(copied_method_name).should be_false
+  end
+
   describe 'with parameters' do
 
     before :each do
