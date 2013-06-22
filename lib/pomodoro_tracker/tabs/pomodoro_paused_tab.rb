@@ -13,7 +13,7 @@ module PomodoroTracker
       init_clock(pause_time) { display_pause_end }
       @info = para pause_info
       @quick = stack do
-        resume_work_button
+        resume_work_button unless @activity.finished?
         AddActivitySlot.new stack, @activity_inventory
       end
 
@@ -41,15 +41,27 @@ module PomodoroTracker
     def display_pause_end
       @quick.hide
       @info.replace pause_end_info
-      @content.append { resume_work_button }
+      @content.append do
+        if @activity.finished?
+          activity_inventory_button
+        else
+          resume_work_button
+        end
+      end
     end
     
     def pause_end_info
       'That was your break - hope you enjoyed! Time to get back to work again!'
     end
+
+    def activity_inventory_button
+      @slot_manager.open ActivityInventoryTab, @activity_inventory
+    end
     
     def resume_work_button
-      button 'Resume Work' do @slot_manager.open PomodoroRunningTab, @activity end
+      button 'Resume Work' do
+        @slot_manager.open PomodoroRunningTab, @activity
+      end
     end
     
   end

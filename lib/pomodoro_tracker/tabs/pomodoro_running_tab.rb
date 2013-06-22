@@ -36,7 +36,9 @@ module PomodoroTracker
     def finish_button(label)
       button label do
         @activity.finish
-        @slot_manager.open PomodoroTracker::TodayTab
+        @slot_manager.open PomodoroPausedTab, @activity,
+                                              @activity_inventory,
+                                              @options
       end
     end
     
