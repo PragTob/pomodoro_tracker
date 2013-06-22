@@ -10,5 +10,6 @@ require PomodoroTracker::POMODORO_DIR + 'constants'
 require PomodoroTracker::POMODORO_DIR + 'models/all'
 require PomodoroTracker::POMODORO_DIR + 'tabs/all'
 require PomodoroTracker::POMODORO_DIR + 'slots/activity_table_slot'
+require PomodoroTracker::POMODORO_DIR + 'slots/add_activity_slot'
 require PomodoroTracker::POMODORO_DIR + 'main_window'
 
