@@ -10,12 +10,19 @@ module PomodoroTracker
 
     def content
       stack do
-        para "Add an activity"
+        empty_line
+        para "Add an activity to your activity backlog"
         add_activity_description
         add_activity_estimation
         button "Add" do add_activity end
       end
       keypress_handler
+    end
+
+    private
+
+    def empty_line
+      para
     end
 
     def add_activity_description
@@ -37,7 +44,7 @@ module PomodoroTracker
       activity = Activity.new(description: @description.text,
                               estimate: @estimate.text.to_i)
       @activity_inventory.add activity
-      @activity_table.new_activity(activity)
+      @activity_table.new_activity(activity) if @activity_table
       @description.text = ''
       @estimate.text = ''
     end

@@ -9,14 +9,12 @@ module PomodoroTracker
     def content
       title "Activity Inventory"
 
-      table_slot = stack
-      @activity_table = ActivityTableSlot.new table_slot,
+      @activity_table = ActivityTableSlot.new stack,
                                               @activity_inventory.backlog,
                                               @activity_inventory,
                                               [:do_today, :delete]
 
-      add_activity_slot = stack
-      AddActivitySlot.new add_activity_slot,
+      AddActivitySlot.new stack,
                           @activity_inventory,
                           @activity_table
     end

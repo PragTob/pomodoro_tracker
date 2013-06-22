@@ -14,8 +14,12 @@ module PomodoroTracker
 
     def content
       init_clock(@options.pomodoro_time) { display_pomodoro_end }
-      @info = para working_info
-      @quick = flow do quick_finish end
+      para working_info
+      @quick = stack do
+        quick_finish
+        AddActivitySlot.new stack, @activity_inventory
+      end
+
     end
 
     private
@@ -39,7 +43,9 @@ module PomodoroTracker
     def pause_button
       button "Pause" do
         @activity.pause
-        @slot_manager.open PomodoroPausedTab, @activity, @options
+        @slot_manager.open PomodoroPausedTab, @activity,
+                                              @activity_inventory,
+                                              @options
       end
     end
 

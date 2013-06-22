@@ -3,15 +3,20 @@ module PomodoroTracker
     include ShoesSlotManager::DynamicSlot
     include ClockHelper
     
-    def init_data(activity, options)
-      @activity = activity
-      @options = options
+    def init_data(activity, activity_inventory, options)
+      @activity           = activity
+      @activity_inventory = activity_inventory
+      @options            = options
     end
     
     def content
       init_clock(pause_time) { display_pause_end }
       @info = para pause_info
-      @quick = flow do resume_work_button end
+      @quick = stack do
+        resume_work_button
+        AddActivitySlot.new stack, @activity_inventory
+      end
+
     end
 
     private
