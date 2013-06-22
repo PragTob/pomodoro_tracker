@@ -112,6 +112,12 @@ describe AfterDo do
       call_all_3_methods
     end
 
+    it 'can get the methods as an Array' do
+      mockie.should_receive(:call_method).exactly(3).times
+      @dummy_class.after [:zero, :one, :two] do mockie.call_method end
+      call_all_3_methods
+    end
+
     it 'raises an error when no method is specified' do
       expect do
         @dummy_class.after do mockie.call_method end

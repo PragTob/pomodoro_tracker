@@ -11,6 +11,7 @@ module AfterDo
 
   def after(*methods, &block)
     @_after_do_callbacks ||= Hash.new([])
+    methods.flatten! #in case someone used an Array
     if methods.empty?
       raise ArgumentError, 'after takes at least one method name!'
     end
@@ -27,6 +28,7 @@ module AfterDo
   end
 
   private
+
   def make_after_do_version_of_method(method)
     @_after_do_callbacks[method] = []
     alias_name = aliased_name method
