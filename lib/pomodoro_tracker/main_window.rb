@@ -1,6 +1,5 @@
 module PomodoroTracker
 
-  STORAGE_LOCATION = File.expand_path('../../..', __FILE__) + '/activities.yml'
   OPTIONS_LOCATION = File.expand_path('../../..', __FILE__) + '/options.yml'
 
   Shoes.app title: "pomodoro tracker", width: 600, height: 600 do
@@ -20,7 +19,7 @@ module PomodoroTracker
 
     def boot
       @options = Options.new OPTIONS_LOCATION
-      persistor  = FilePersistor.new STORAGE_LOCATION
+      persistor  = FilePersistor.new @options.activities_storage_path
       @inventory = ActivityInventory.new persistor
       Activity.extend AfterDo
       Activity.after :start, :pause, :finish, :resurrect,

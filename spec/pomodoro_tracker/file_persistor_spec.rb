@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe 'Persistor' do
 
-  TEST_FILE_PATH = File.expand_path('../', __FILE__) + '/test_storage.yml'
+  TEST_PERSISTOR_PATH = File.expand_path('../', __FILE__) + '/test_storage.yml'
 
   before :each do
     @activity = FactoryGirl.build :activity
-    @persistor = PomodoroTracker::FilePersistor.new TEST_FILE_PATH
+    @persistor = PomodoroTracker::FilePersistor.new TEST_PERSISTOR_PATH
   end
 
   after :each do
-    File.delete TEST_FILE_PATH if File.exist? TEST_FILE_PATH
+    File.delete TEST_PERSISTOR_PATH if File.exist? TEST_PERSISTOR_PATH
   end
 
   it 'saves the activity and returns a truthy value' do

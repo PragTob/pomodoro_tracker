@@ -24,7 +24,9 @@ module PomodoroTracker
       button 'Save' do
         Options::OPTIONS.each do |option|
           setter_name = Options.setter_name_from option
-          @options.send(setter_name, @option_edit_lines[option].text.to_i)
+          input = @option_edit_lines[option].text
+          input = input.to_i if Options::INTEGER_OPTIONS.include? option
+          @options.send(setter_name, input)
         end
       end
     end
