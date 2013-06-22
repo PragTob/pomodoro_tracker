@@ -2,8 +2,9 @@ module PomodoroTracker
   class ActivityTableSlot < ShoesSlotManager::Slot
 
     TABLE_COLUMNS     = ['Description', 'Pomodori', 'Estimate', 'Actions']
-    DESCRIPTION_WIDTH = POMODORI_WIDTH = ESTIMATE_WIDTH = 100
-    ACTIONS_WIDTH     = 180
+    DESCRIPTION_WIDTH = 300
+    POMODORI_WIDTH = ESTIMATE_WIDTH = 100
+    ACTIONS_WIDTH     = 300
     DESCRIPTION_LEFT  = ::MENU_WIDTH
 
     POMODORI_LEFT = DESCRIPTION_LEFT + DESCRIPTION_WIDTH
