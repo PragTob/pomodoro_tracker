@@ -19,11 +19,15 @@ module PomodoroTracker
 
     def boot
       @options = Options.new OPTIONS_LOCATION
+      load_activity_inventory()
+    end
+
+    def load_activity_inventory
       persistor  = FilePersistor.new @options.activities_storage_path
       @inventory = ActivityInventory.new persistor
       Activity.extend AfterDo
       Activity.after :start, :pause, :finish, :resurrect,
-                                      :do_today, :do_another_day do |activity|
+                     :do_today, :do_another_day do |activity|
         persistor.save activity
       end
     end
