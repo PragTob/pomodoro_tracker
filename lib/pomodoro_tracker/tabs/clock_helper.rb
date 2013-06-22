@@ -5,8 +5,8 @@ module PomodoroTracker
                                     __FILE__)
 
     # the seconds until &block gets executed
-    def init_clock(seconds, &block)
-      @seconds = seconds
+    def init_clock(minutes, &block)
+      @seconds = minutes * 60
       @display = stack margin: 10
       display_time
       clock_ticking(&block)
