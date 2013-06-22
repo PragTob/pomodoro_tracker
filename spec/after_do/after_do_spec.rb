@@ -61,6 +61,13 @@ describe AfterDo do
     dummy_instance.zero
   end
 
+  it 'can remove all callbacks' do
+    mockie.should_not_receive :call_method
+    @dummy_class.after :zero do mockie.call_method end
+    @dummy_class.remove_all_callbacks
+    dummy_instance.zero
+  end
+
   describe 'with parameters' do
 
     before :each do
