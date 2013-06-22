@@ -15,6 +15,7 @@ module PomodoroTracker
     DO_ANOTHER_DAY_BUTTON = :do_another_day
     DELETE_BUTTON         = :delete
     RESURRECT_BUTTON      = :resurrect
+    FINISH_BUTTON         = :finish
 
 
 
@@ -67,6 +68,7 @@ module PomodoroTracker
         do_today_button(activity) if @buttons.include? DO_TODAY_BUTTON
         resurrect_button(activity) if @buttons.include? RESURRECT_BUTTON
         delete_button(activity) if @buttons.include? DELETE_BUTTON
+        finish_button(activity) if @buttons.include? FINISH_BUTTON
       end
     end
 
@@ -84,22 +86,23 @@ module PomodoroTracker
     def start_button(activity)
       button 'Start' do
         activity.start
-        @slot_manager.open PomodoroRunningTab, activity, @activity_inventory,
-                           @options
+        @slot_manager.open PomodoroRunningTab, activity,
+                                               @activity_inventory,
+                                               @options
       end
     end
 
     def do_another_day_button(activity)
       button 'Do another day' do |do_another_day_button|
         activity.do_another_day
-        do_another_day_button.parent.parent.remove
+        remove_row_of do_another_day_button
       end
     end
 
     def do_today_button(activity)
       button "Do Today" do |do_today_button|
         activity.do_today
-        do_today_button.parent.parent.remove
+        remove_row_of do_today_button
       end
     end
 
@@ -107,7 +110,7 @@ module PomodoroTracker
       button "Delete" do |delete_button|
         if confirm 'Sure to delete this activity?'
           @activity_inventory.remove activity
-          delete_button.parent.parent.remove
+          remove_row_of delete_button
         end
       end
     end
@@ -115,9 +118,19 @@ module PomodoroTracker
     def resurrect_button(activity)
       button 'Resurrect' do |resurrect_button|
         activity.resurrect
-        resurrect_button.parent.parent.remove
+        remove_row_of resurrect_button
       end
     end
 
+    def finish_button(activity)
+      button 'Finish' do |finish_button|
+        activity.finish
+        remove_row_of finish_button
+      end
+    end
+
+    def remove_row_of(element)
+      element.parent.parent.remove
+    end
   end
 end

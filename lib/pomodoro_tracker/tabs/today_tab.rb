@@ -19,7 +19,7 @@ module PomodoroTracker
                                               @options,
                                               @activity_inventory.todo_today,
                                               @activity_inventory,
-                                              [:start, :do_another_day]
+                                              [:start, :do_another_day, :finish]
 
       para "You might want to add something from your activity inventory"
     end
