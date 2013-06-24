@@ -43,7 +43,7 @@ module PomodoroTracker
       @info.replace pause_end_info
       @content.append do
         if @activity.finished?
-          activity_inventory_button
+          todo_today_button
         else
           resume_work_button
         end
@@ -54,8 +54,10 @@ module PomodoroTracker
       'That was your break - hope you enjoyed! Time to get back to work again!'
     end
 
-    def activity_inventory_button
-      @slot_manager.open ActivityInventoryTab, @activity_inventory
+    def todo_today_button
+      button 'Go back to Todo Today' do
+        @slot_manager.open TodayTab, @activity_inventory
+      end
     end
     
     def resume_work_button
