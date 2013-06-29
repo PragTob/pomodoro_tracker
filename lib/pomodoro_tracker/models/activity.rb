@@ -1,7 +1,7 @@
 module PomodoroTracker
   class Activity
     attr_accessor :description, :estimate
-    attr_reader   :pomodori, :created_at
+    attr_reader   :pomodori, :created_at, :finished_at
     
     PAUSED            = :paused
     INACTIVE          = :inactive
@@ -32,6 +32,7 @@ module PomodoroTracker
       do_another_day
       @status = FINISHED
       @pomodori += 1
+      @finished_at = Time.now
     end
 
     def resurrect

@@ -58,6 +58,10 @@ describe PomodoroTracker::Activity do
     @activity.should be_inactive
   end
 
+  it 'has no finished_at time' do
+    @activity.finished_at.should be_nil
+  end
+
   describe 'creation with all 3 values' do
 
     A_DESCRIPTION = 'A description'
@@ -131,6 +135,14 @@ describe PomodoroTracker::Activity do
         it 'keeps the pomodori count after resurrection' do
           @activity.resurrect
           @activity.pomodori.should be 1
+        end
+
+        it 'saves its finish time' do
+          new_activity = PomodoroTracker::Activity.new
+          Timecop.freeze(time = Time.now) do
+            new_activity.finish
+          end
+          new_activity.finished_at.should eq time
         end
       end
 
