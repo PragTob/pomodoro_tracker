@@ -3,6 +3,7 @@ SimpleCov.start
 
 require 'factory_girl'
 require 'timecop'
+require 'after_do'
 
 module PomodoroTracker
   # when require_relative does not work... - rspec version
@@ -11,5 +12,4 @@ end
 
 require_relative '../lib/pomodoro_tracker/models/all'
 require_relative 'pomodoro_tracker/factories'
-require_relative '../lib/after_do/after_do'
 

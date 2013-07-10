@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'after_do'
 gem 'rspec', '~> 2.12'
 gem 'factory_girl', '~>4.1.0'
 gem 'timecop'
